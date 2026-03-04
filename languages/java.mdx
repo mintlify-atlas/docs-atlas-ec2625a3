@@ -1,0 +1,428 @@
+---
+title: Java Cheat Sheet
+description: Comprehensive quick reference for Java covering syntax, data types, OOP concepts, collections, and core Java programming fundamentals.
+---
+
+## Overview
+
+Java is a class-based, object-oriented programming language designed to have minimal implementation dependencies. This cheat sheet covers fundamental Java concepts from the mobile app.
+
+## Getting Started
+
+### Hello World
+
+```java
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+**Compiling and Running:**
+
+```bash
+$ javac Hello.java
+$ java Hello
+Hello, world!
+```
+
+### Variables
+
+```java
+int num = 5;
+float floatNum = 5.99f;
+char letter = 'D';
+boolean bool = true;
+String site = "cheatsheets.zip";
+```
+
+## Primitive Data Types
+
+| Type | Size | Default | Range |
+|------|------|---------|-------|
+| `byte` | 1 byte | 0 | -128 to 127 |
+| `short` | 2 bytes | 0 | -2¹⁵ to 2¹⁵-1 |
+| `int` | 4 bytes | 0 | -2³¹ to 2³¹-1 |
+| `long` | 8 bytes | 0 | -2⁶³ to 2⁶³-1 |
+| `float` | 4 bytes | 0.0f | N/A |
+| `double` | 8 bytes | 0.0d | N/A |
+| `char` | 2 bytes | \u0000 | 0 to 65535 |
+| `boolean` | N/A | false | true/false |
+
+## Strings
+
+### Basic Operations
+
+<CodeGroup>
+
+```java Creation
+String first = "John";
+String last = "Doe";
+String name = first + " " + last;
+System.out.println(name);  // John Doe
+```
+
+```java StringBuilder
+StringBuilder sb = new StringBuilder(10);
+sb.append("QuickRef");
+System.out.println(sb);  // QuickRef
+
+sb.delete(5, 9);
+System.out.println(sb);  // Quick
+```
+
+</CodeGroup>
+
+### Common Methods
+
+| Method | Description |
+|--------|-------------|
+| `length()` | String length |
+| `substring(start, end)` | Extract substring |
+| `toUpperCase()` | Convert to uppercase |
+| `toLowerCase()` | Convert to lowercase |
+| `charAt(index)` | Get character at index |
+| `equals(str)` | Compare strings |
+| `contains(str)` | Check if contains substring |
+
+## Arrays
+
+### Declaration and Usage
+
+<Tabs>
+  <Tab title="Declaration">
+    ```java
+    int[] a1;
+    int[] a2 = {1, 2, 3};
+    int[] a3 = new int[]{1, 2, 3};
+    
+    int[] a4 = new int[3];
+    a4[0] = 1;
+    a4[1] = 2;
+    a4[2] = 3;
+    ```
+  </Tab>
+  <Tab title="Modification">
+    ```java
+    int[] a = {1, 2, 3};
+    System.out.println(a[0]);  // 1
+    
+    a[0] = 9;
+    System.out.println(a[0]);  // 9
+    
+    System.out.println(a.length);  // 3
+    ```
+  </Tab>
+  <Tab title="Iteration">
+    ```java
+    int[] arr = {1, 2, 3};
+    
+    // Traditional loop
+    for (int i = 0; i < arr.length; i++) {
+        System.out.print(arr[i] + " ");
+    }
+    
+    // Enhanced for loop
+    for (int num : arr) {
+        System.out.print(num + " ");
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Control Flow
+
+### If-Else Statements
+
+```java
+int score = 99;
+
+if (score == 100) {
+    System.out.println("Superb");
+} else if (score >= 90) {
+    System.out.println("Excellent");
+} else if (score >= 80) {
+    System.out.println("Very Good");
+} else {
+    System.out.println("Good");
+}
+```
+
+### Switch Statement
+
+```java
+int month = 3;
+String str;
+
+switch (month) {
+    case 1:
+        str = "January";
+        break;
+    case 2:
+        str = "February";
+        break;
+    case 3:
+        str = "March";
+        break;
+    default:
+        str = "Some other month";
+        break;
+}
+
+System.out.println("Result: " + str);  // Result: March
+```
+
+### Ternary Operator
+
+```java
+int a = 10;
+int b = 20;
+int max = (a > b) ? a : b;
+
+System.out.println(max);  // 20
+```
+
+## Loops
+
+### For Loop
+
+<CodeGroup>
+
+```java Standard
+for (int i = 0; i < 10; i++) {
+    System.out.print(i);
+}
+// Output: 0123456789
+```
+
+```java Enhanced
+int[] numbers = {1, 2, 3, 4, 5};
+
+for (int number : numbers) {
+    System.out.print(number);
+}
+// Output: 12345
+```
+
+</CodeGroup>
+
+### While Loops
+
+<Tabs>
+  <Tab title="While">
+    ```java
+    int count = 0;
+    
+    while (count < 5) {
+        System.out.print(count);
+        count++;
+    }
+    // Output: 01234
+    ```
+  </Tab>
+  <Tab title="Do-While">
+    ```java
+    int count = 0;
+    
+    do {
+        System.out.print(count);
+        count++;
+    } while (count < 5);
+    // Output: 01234
+    ```
+  </Tab>
+</Tabs>
+
+### Loop Control
+
+<CodeGroup>
+
+```java Continue
+for (int i = 0; i < 5; i++) {
+    if (i == 3) {
+        continue;
+    }
+    System.out.print(i);
+}
+// Output: 0124
+```
+
+```java Break
+for (int i = 0; i < 5; i++) {
+    System.out.print(i);
+    if (i == 3) {
+        break;
+    }
+}
+// Output: 0123
+```
+
+</CodeGroup>
+
+## Methods
+
+### Basic Methods
+
+```java
+public class Main {
+    static int add(int a, int b) {
+        return a + b;
+    }
+    
+    public static void main(String[] args) {
+        int result = add(5, 3);
+        System.out.println(result);  // 8
+    }
+}
+```
+
+### Method Overloading
+
+```java
+void fun(String a, String b) {
+    System.out.println(a + " " + b);
+}
+
+void fun(String a) {
+    System.out.println(a);
+}
+
+void fun(int a) {
+    System.out.println(a);
+}
+```
+
+## Classes and Objects
+
+### Defining Classes
+
+```java
+class MyClass {
+    int myNum;
+    String myString;
+    
+    // Constructor
+    MyClass() {
+        myNum = 0;
+        myString = "";
+    }
+    
+    // Method
+    void myMethod() {
+        System.out.println("Hello World!");
+    }
+}
+```
+
+### Creating Objects
+
+```java
+MyClass myObj = new MyClass();
+
+myObj.myNum = 15;
+myObj.myString = "Hello";
+
+System.out.println(myObj.myNum);     // 15
+System.out.println(myObj.myString);  // Hello
+
+myObj.myMethod();  // Hello World!
+```
+
+### Access Modifiers
+
+| Modifier | Class | Package | Subclass | World |
+|----------|-------|---------|----------| ------|
+| `public` | Y | Y | Y | Y |
+| `protected` | Y | Y | Y | N |
+| No modifier | Y | Y | N | N |
+| `private` | Y | N | N | N |
+
+## Collections
+
+### ArrayList
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> cars = new ArrayList<String>();
+cars.add("Volvo");
+cars.add("BMW");
+cars.add("Ford");
+
+System.out.println(cars);  // [Volvo, BMW, Ford]
+System.out.println(cars.get(0));  // Volvo
+cars.remove(0);
+System.out.println(cars);  // [BMW, Ford]
+```
+
+### HashMap
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> ages = new HashMap<String, Integer>();
+ages.put("John", 30);
+ages.put("Jane", 25);
+
+System.out.println(ages.get("John"));  // 30
+System.out.println(ages.size());       // 2
+```
+
+## Exception Handling
+
+### Try-Catch
+
+```java
+try {
+    int[] myNumbers = {1, 2, 3};
+    System.out.println(myNumbers[10]);
+} catch (Exception e) {
+    System.out.println("Something went wrong.");
+} finally {
+    System.out.println("The try-catch is finished.");
+}
+```
+
+## Key Features
+
+<Accordion title="Inheritance">
+  Extend classes to create specialized versions:
+  
+  ```java
+  class Animal {
+      void sound() {
+          System.out.println("Animal makes a sound");
+      }
+  }
+  
+  class Dog extends Animal {
+      void sound() {
+          System.out.println("Dog barks");
+      }
+  }
+  
+  Dog dog = new Dog();
+  dog.sound();  // Dog barks
+  ```
+</Accordion>
+
+<Accordion title="Interfaces">
+  Define contracts that classes must implement:
+  
+  ```java
+  interface Animal {
+      void sound();
+  }
+  
+  class Dog implements Animal {
+      public void sound() {
+          System.out.println("Bark");
+      }
+  }
+  ```
+</Accordion>
+
+<Tip>
+Java follows the principle of "Write Once, Run Anywhere" (WORA) through its platform-independent bytecode.
+</Tip>

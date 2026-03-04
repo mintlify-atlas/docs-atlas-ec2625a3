@@ -1,0 +1,318 @@
+---
+title: Rust Cheat Sheet
+description: Quick reference guide for Rust programming language covering syntax, types, control flow, functions, and memory safety concepts.
+---
+
+## Overview
+
+Rust is a systems programming language focused on safety, speed, and concurrency. This cheat sheet covers the fundamental Rust concepts available in the mobile app.
+
+## Getting Started
+
+### Hello World
+
+```rust
+fn main() {
+    println!("Hello, World!");
+}
+```
+
+**Compiling and Running:**
+
+```bash
+$ rustc Hello_World.rs
+$ ./Hello_World
+Hello, World!
+```
+
+### Variables
+
+```rust
+// Initializing and declaring a variable
+let mut a: u32 = 8;
+let b: u64 = 877;
+let c: i64 = 8999;
+let d = -90;  // Type inference
+```
+
+<Note>
+Variables in Rust are immutable by default. Use `mut` keyword for mutable variables.
+</Note>
+
+## Primitive Types
+
+### Integer Types
+
+| Type | Description |
+|------|-------------|
+| `i64`, `i32`, `i16`, `i8` | Signed integers |
+| `u64`, `u32`, `u16`, `u8` | Unsigned integers |
+| `isize` | Pointer-sized signed integers |
+| `usize` | Pointer-sized unsigned integers |
+
+### Other Types
+
+| Type | Description |
+|------|-------------|
+| `bool` | Boolean (true/false) |
+| `char` | Character |
+| `f32`, `f64` | 32-bit, 64-bit floats |
+
+### Examples
+
+<CodeGroup>
+
+```rust Integers
+let mut a: u32 = 8;
+let b: u64 = 877;
+let c: i64 = 8999;
+let d = -90;
+```
+
+```rust Floats
+let mut sixty_bit_float: f64 = 89.90;
+let thirty_two_bit_float: f32 = 7.90;
+let just_a_float = 69.69;
+```
+
+```rust Booleans
+let true_val: bool = true;
+let false_val: bool = false;
+let is_true = 8 < 5;  // => false
+```
+
+```rust Characters
+let first_letter = 'a';
+let explicit_char: char = 'F';
+let emoji = "\u{1f600}";  // => 😀
+```
+
+</CodeGroup>
+
+## Strings
+
+### String Literals
+
+```rust
+let community_name = "AXIAL";
+let no_of_members: &str = "ten";
+
+println!("Community: {community_name}, Members: {no_of_members}");
+```
+
+### String Methods
+
+<Tabs>
+  <Tab title="Capacity">
+    ```rust
+    let rand = String::from("Random String");
+    println!("{}", rand.capacity());  // Output: 13
+    ```
+  </Tab>
+  <Tab title="Contains">
+    ```rust
+    let name = String::from("ElementalX");
+    println!("{}", name.contains("Element"));  // Output: true
+    ```
+  </Tab>
+  <Tab title="Push">
+    ```rust
+    let mut half_text = String::from("Hal");
+    half_text.push('f');  // Output: Half
+    
+    let mut hi = String::from("Hey there...");
+    hi.push_str("How are you doing??");
+    ```
+  </Tab>
+</Tabs>
+
+## Arrays
+
+### Declaration and Usage
+
+```rust
+let array: [i64; 6] = [92, 97, 98, 99, 98, 94];
+```
+
+Visualization:
+```
+┌─────┬─────┬─────┬─────┬─────┬─────┐
+│ 92  │ 97  │ 98  │ 99  │ 98  │ 94  │
+└─────┴─────┴─────┴─────┴─────┴─────┘
+   0     1     2     3     4     5
+```
+
+## Control Flow
+
+### If Expressions
+
+<CodeGroup>
+
+```rust Basic If
+let case1: i32 = 81;
+let case2: i32 = 82;
+
+if case1 < case2 {
+    println!("case1 is less than case2");
+}
+```
+
+```rust If-Else-If
+let foo = 12;
+let bar = 13;
+
+if foo == bar {
+    println!("foo equals bar");
+} else if foo < bar {
+    println!("foo less than bar");
+} else if foo != bar {
+    println!("foo not equal to bar");
+} else {
+    println!("Nothing");
+}
+```
+
+</CodeGroup>
+
+### Match Expression
+
+```rust
+let day_of_week = 2;
+
+match day_of_week {
+    1 => println!("It's Monday"),
+    2 => println!("It's Tuesday"),
+    3 => println!("It's Wednesday"),
+    4 => println!("It's Thursday"),
+    5 => println!("It's Friday"),
+    6 => println!("It's Saturday"),
+    7 => println!("It's Sunday"),
+    _ => println!("Invalid day"),
+}
+```
+
+## Functions
+
+### Basic Functions
+
+```rust
+fn print_message() {
+    println!("Hello, CheatSheets.zip!");
+}
+
+fn main() {
+    print_message();
+}
+```
+
+### Functions with Parameters
+
+<Tabs>
+  <Tab title="Pass by Value">
+    ```rust
+    fn cal_rect(x: u32, y: u32) -> u32 {
+        x * y
+    }
+    
+    fn main() {
+        let area = cal_rect(10, 20);
+        println!("Area: {}", area);  // Output: 200
+    }
+    ```
+  </Tab>
+  <Tab title="Pass by Reference">
+    ```rust
+    fn power_of_three(by_ref: &mut i32) {
+        *by_ref = *by_ref * *by_ref;
+        println!("{by_ref}");  // Output: 9
+    }
+    
+    fn main() {
+        let mut value = 3;
+        power_of_three(&mut value);
+        println!("{value}");  // Output: 9
+    }
+    ```
+  </Tab>
+  <Tab title="Multiple Returns">
+    ```rust
+    fn calculate(radius: &mut f64, pi: &mut f64) -> (f64, f64) {
+        let perimeter = 2.0 * *pi * *radius;
+        let area = *pi * *radius * *radius;
+        return (area, perimeter);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Operators
+
+### Comparison Operators
+
+```rust
+let (e, f) = (1, 100);
+
+let greater = f > e;        // true
+let less = f < e;           // false
+let greater_equal = f >= e; // true
+let less_equal = e <= f;    // true
+let equal_to = e == f;      // false
+let not_equal_to = e != f;  // true
+```
+
+### Arithmetic Operators
+
+```rust
+let (a, b) = (4, 5);
+
+let sum = a + b;           // 9
+let subtraction = a - b;   // -1
+let multiplication = a * b; // 20
+let division = a / b;      // 0
+let modulus = a % b;       // 4
+```
+
+## Key Features
+
+<Accordion title="Ownership & Borrowing">
+  Rust's unique memory management features:
+  
+  ```rust
+  // Borrowing
+  let mut foo = 4;
+  let borrowed_foo = &foo;
+  println!("Borrowed: {}", borrowed_foo);
+  
+  // Mutable borrowing
+  let mut bar = 3;
+  let mutable_borrowed = &mut bar;
+  println!("Mutable borrowed: {}", mutable_borrowed);
+  ```
+</Accordion>
+
+<Accordion title="Type Casting">
+  Convert between types using the `as` keyword:
+  
+  ```rust
+  let a_int = 90;
+  let type_cast = a_int as f64;  // int to float
+  
+  let original: char = 'I';
+  let type_casted: i64 = original as i64;  // char to int => 73
+  ```
+</Accordion>
+
+<Accordion title="Printing Styles">
+  Various ways to print output:
+  
+  ```rust
+  print!("Hello World\n");           // Print without newline
+  println!("Appending a new line");  // Print with newline
+  eprint!("This is an error\n");     // Error output
+  eprintln!("Error with newline");   // Error with newline
+  ```
+</Accordion>
+
+<Tip>
+Rust ensures memory safety without garbage collection through its ownership system.
+</Tip>

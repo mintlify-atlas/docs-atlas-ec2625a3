@@ -1,97 +1,227 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Cheat Sheets Documentation"
+description: "Your go-to quick reference guide for learning Python, Rust, Swift, JavaScript, Kotlin, Go, Git, and more"
+mode: "custom"
 ---
 
-## Setting up
+<div className="relative w-full overflow-hidden bg-gradient-to-br from-[#94cb04]/10 via-white to-[#545454]/5 dark:from-[#94cb04]/20 dark:via-[#0f1117] dark:to-[#1a1d27] py-20 lg:py-24">
+  <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="lg:col-span-7">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+          Your Go-To Developer Reference Guide
+        </h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-8">
+          Quick reference cheat sheets for learning Python, Rust, Swift, JavaScript, Kotlin, Go, Git, and more. Available as a beautiful Flutter mobile app for iOS and Android.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
+          <a
+            href="/quickstart"
+            className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#94cb04] hover:bg-[#7da903] rounded-lg transition-colors"
+          >
+            Get Started
+          </a>
+          <a
+            href="/installation"
+            className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-900 dark:text-gray-100 bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10 border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors"
+          >
+            Install the App
+          </a>
+        </div>
+      </div>
+      <div className="lg:col-span-5 flex items-center justify-center">
+        <div className="relative w-full max-w-md">
+          <div className="absolute inset-0 bg-[#94cb04]/20 dark:bg-[#94cb04]/30 blur-3xl rounded-full"></div>
+          <div className="relative bg-white dark:bg-[#1a1d27] rounded-2xl border border-gray-200 dark:border-[#27272a] p-6 shadow-xl">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <pre className="text-sm text-gray-800 dark:text-gray-200 font-mono overflow-hidden">
+{`# Quick Python Example
+def greet(name):
+    return f"Hello, {name}!"
 
-Get your documentation site up and running in minutes.
+print(greet("Developer"))
+# Output: Hello, Developer!`}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Quick Start</h2>
+  <p className="text-base text-gray-600 dark:text-gray-400 mb-8">
+    Get up and running with Cheat Sheets in just a few minutes
+  </p>
 
-## Make it yours
+  <Steps>
+    <Step title="Install the App">
+      Download Cheat Sheets for your platform. Available on Android via Google Play, iOS via AltStore, or as direct APK/IPA downloads from GitHub Releases.
+      
+      ```bash Android (Google Play)
+      # Visit Google Play Store
+      # Search for "Cheat Sheets" or use the direct link
+      ```
+      
+      See the [Installation Guide](/installation) for detailed instructions for all platforms.
+    </Step>
+    
+    <Step title="Browse Programming Languages">
+      Explore comprehensive cheat sheets for Python, Rust, Swift, JavaScript, Kotlin, Go, Dart, Java, C++, and more. Each sheet includes syntax examples, common patterns, and best practices.
+      
+      <Tip>Use the search functionality to quickly find specific syntax or commands across all cheat sheets.</Tip>
+    </Step>
+    
+    <Step title="Learn Developer Tools">
+      Master essential developer tools with quick reference guides for Git, GitHub CLI, Docker, Vim, and other command-line utilities.
+    </Step>
+  </Steps>
+</div>
 
-Design a docs site that looks great and empowers your users.
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Explore by Topic</h2>
+  <p className="text-base text-gray-600 dark:text-gray-400 mb-8">
+    Jump into the topics that matter most to your workflow
+  </p>
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+  <CardGroup cols={3}>
+    <Card title="Python" icon="python" href="/languages/python">
+      Complete reference for Python syntax, data structures, and standard library
+    </Card>
+    <Card title="Rust" icon="rust" href="/languages/rust">
+      Memory safety, ownership, and Rust's powerful type system explained
+    </Card>
+    <Card title="Swift" icon="apple" href="/languages/swift">
+      iOS and macOS development with Swift syntax and frameworks
+    </Card>
+    <Card title="JavaScript" icon="js" href="/languages/javascript">
+      Modern JavaScript features, ES6+, and common patterns
+    </Card>
+    <Card title="Kotlin" icon="k" href="/languages/kotlin">
+      Android development and Kotlin language fundamentals
+    </Card>
+    <Card title="Go" icon="golang" href="/languages/go">
+      Concurrency, goroutines, and Go best practices
+    </Card>
+    <Card title="Git" icon="git" href="/tools/git">
+      Version control commands and workflows
+    </Card>
+    <Card title="Docker" icon="docker" href="/tools/docker">
+      Container management and Docker commands
+    </Card>
+    <Card title="Vim" icon="terminal" href="/tools/vim">
+      Text editor commands and productivity shortcuts
+    </Card>
+  </CardGroup>
+</div>
 
-## Create beautiful pages
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Key Features</h2>
+  <p className="text-base text-gray-600 dark:text-gray-400 mb-8">
+    Everything you need for quick reference and learning
+  </p>
 
-Everything you need to create world-class documentation.
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="bg-white dark:bg-[#1a1d27] rounded-xl border border-gray-200 dark:border-[#27272a] p-6">
+      <div className="w-12 h-12 bg-[#94cb04]/10 dark:bg-[#94cb04]/20 rounded-lg flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#94cb04]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">15+ Programming Languages</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Comprehensive cheat sheets covering Python, Rust, Swift, JavaScript, Kotlin, Go, and many more languages with real code examples.
+      </p>
+    </div>
+    
+    <div className="bg-white dark:bg-[#1a1d27] rounded-xl border border-gray-200 dark:border-[#27272a] p-6">
+      <div className="w-12 h-12 bg-[#94cb04]/10 dark:bg-[#94cb04]/20 rounded-lg flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#94cb04]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Beautiful Mobile App</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Native Flutter app for iOS and Android with smooth performance, dark mode support, and intuitive navigation.
+      </p>
+    </div>
+    
+    <div className="bg-white dark:bg-[#1a1d27] rounded-xl border border-gray-200 dark:border-[#27272a] p-6">
+      <div className="w-12 h-12 bg-[#94cb04]/10 dark:bg-[#94cb04]/20 rounded-lg flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#94cb04]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Powerful Search</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Find exactly what you need instantly with full-text search across all cheat sheets, categories, and code examples.
+      </p>
+    </div>
+    
+    <div className="bg-white dark:bg-[#1a1d27] rounded-xl border border-gray-200 dark:border-[#27272a] p-6">
+      <div className="w-12 h-12 bg-[#94cb04]/10 dark:bg-[#94cb04]/20 rounded-lg flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#94cb04]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Syntax Highlighting</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Beautiful code highlighting for better readability, making it easier to understand syntax at a glance.
+      </p>
+    </div>
+  </div>
+</div>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Building & Contributing</h2>
+  <p className="text-base text-gray-600 dark:text-gray-400 mb-8">
+    Help improve Cheat Sheets or build your own customized version
+  </p>
 
-## Need inspiration?
+  <CardGroup cols={2}>
+    <Card title="Development Setup" icon="hammer" href="/building/setup">
+      Set up your local development environment to build and run the Flutter app
+    </Card>
+    <Card title="App Architecture" icon="sitemap" href="/building/architecture">
+      Understand the app structure, state management, and data flow
+    </Card>
+    <Card title="Contributing Guide" icon="code-pull-request" href="/contributing">
+      Learn how to contribute new cheat sheets, fix bugs, or add features
+    </Card>
+    <Card title="GitHub Repository" icon="github" href="https://github.com/ivansaul/cheat-sheets">
+      View the source code, open issues, and submit pull requests
+    </Card>
+  </CardGroup>
+</div>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<div className="mt-20 mb-16 max-w-5xl mx-auto px-6">
+  <div className="relative overflow-hidden bg-gradient-to-r from-[#94cb04]/10 to-[#545454]/10 dark:from-[#94cb04]/20 dark:to-[#545454]/20 rounded-2xl border border-gray-200 dark:border-[#27272a] p-8 lg:p-12">
+    <div className="relative z-10">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        Ready to Get Started?
+      </h2>
+      <p className="text-base text-gray-600 dark:text-gray-400 mb-6 max-w-2xl">
+        Install the app or explore the documentation to start learning and referencing your favorite programming languages today.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <a
+          href="/quickstart"
+          className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#94cb04] hover:bg-[#7da903] rounded-lg transition-colors"
+        >
+          View Quickstart Guide
+        </a>
+        <a
+          href="/installation"
+          className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-900 dark:text-gray-100 bg-white dark:bg-[#1a1d27] hover:bg-gray-50 dark:hover:bg-[#242838] border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors"
+        >
+          Download the App
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

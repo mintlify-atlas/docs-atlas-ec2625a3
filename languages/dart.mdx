@@ -1,0 +1,423 @@
+---
+title: Dart Cheat Sheet
+description: Quick reference for Dart programming language covering syntax, types, control flow, functions, and Flutter development concepts.
+---
+
+## Overview
+
+Dart is a client-optimized programming language for developing fast apps on any platform. It's the primary language for Flutter development. This cheat sheet covers essential Dart concepts.
+
+## Getting Started
+
+### Hello World
+
+```dart
+void main() {
+    print("Hello World!");
+}
+```
+
+<Note>
+Every Dart app has a `main()` function where execution starts.
+</Note>
+
+### Variables
+
+<CodeGroup>
+
+```dart Explicit Types
+int x = 2;
+String name = "John";
+bool isActive = true;
+```
+
+```dart Type Inference
+var p = 5;           // Inferred as int
+var message = "Hi";  // Inferred as String
+```
+
+```dart Dynamic
+dynamic z = 8;  // Can be any type
+z = "cool";     // Type can change
+```
+
+```dart Constants
+final email = "user@example.com";  // Runtime constant
+const qty = 5;                      // Compile-time constant
+```
+
+</CodeGroup>
+
+## Data Types
+
+### Basic Types
+
+| Type | Example | Description |
+|------|---------|-------------|
+| `int` | `int age = 20` | Integers |
+| `double` | `double height = 1.85` | Floating-point |
+| `num` | `num x = 1` | Int or double |
+| `String` | `String name = "John"` | Text |
+| `bool` | `bool isActive = true` | Boolean |
+
+### Strings
+
+<Tabs>
+  <Tab title="Basic">
+    ```dart
+    var firstName = 'Nicola';
+    var lastName = "Tesla";
+    
+    // String interpolation
+    String fullName = "$firstName $lastName";
+    
+    // Concatenation
+    var name = "Albert " + "Einstein";
+    ```
+  </Tab>
+  <Tab title="Multi-line">
+    ```dart
+    print('''My long string
+    with multiple lines''');
+    ```
+  </Tab>
+  <Tab title="Methods">
+    ```dart
+    String upperCase = '${firstName.toUpperCase()}';
+    print(upperCase);  // NICOLA
+    ```
+  </Tab>
+</Tabs>
+
+### Collections
+
+<Tabs>
+  <Tab title="Lists">
+    ```dart
+    var list = [1, 2, 3];
+    
+    print(list.length);  // 3
+    print(list[1]);      // 2
+    
+    List<String> cities = <String>["New York", "Mumbai", "Tokyo"];
+    ```
+  </Tab>
+  <Tab title="Sets">
+    ```dart
+    var halogens = {'fluorine', 'chlorine', 'bromine'};
+    
+    // Empty set
+    var names = <String>{};
+    Set<String> names = {};
+    ```
+  </Tab>
+  <Tab title="Maps">
+    ```dart
+    var person = Map<String, String>();
+    person['firstName'] = 'Nicola';
+    person['lastName'] = 'Tesla';
+    
+    print(person);  // {firstName: Nicola, lastName: Tesla}
+    ```
+  </Tab>
+</Tabs>
+
+## Operators
+
+### Arithmetic
+
+```dart
+print(2 + 3);   // 5
+print(2 - 3);   // -1
+print(2 * 3);   // 6
+print(5 / 2);   // 2.5 (double)
+print(5 ~/ 2);  // 2 (int division)
+print(5 % 2);   // 1 (remainder)
+```
+
+### Comparison & Logical
+
+```dart
+print(2 == 2);   // true
+print(2 != 3);   // true
+print(3 > 2);    // true
+print(2 < 3);    // true
+
+// Logical operators
+if (!isOutOfStock && (quantity == 2 || quantity == 3)) {
+    // Order the product
+}
+```
+
+## Control Flow
+
+### If-Else
+
+```dart
+int age = 18;
+
+if (age < 18) {
+    print("Teen");
+} else if (age > 18 && age < 60) {
+    print("Adult");
+} else {
+    print("Senior");
+}
+```
+
+### Switch-Case
+
+```dart
+enum Pet { dog, cat }
+Pet myPet = Pet.dog;
+
+switch (myPet) {
+    case Pet.dog:
+        print('My Pet is Dog.');
+        break;
+    case Pet.cat:
+        print('My Pet is Cat.');
+        break;
+    default:
+        print('I don\'t have a Pet');
+}
+```
+
+## Loops
+
+### For Loop
+
+<Tabs>
+  <Tab title="Standard">
+    ```dart
+    for (int i = 0; i < 10; i++) {
+        print(i);
+    }
+    ```
+  </Tab>
+  <Tab title="For-In">
+    ```dart
+    var numbers = [1, 2, 3];
+    for (var number in numbers) {
+        print(number);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### While Loops
+
+<CodeGroup>
+
+```dart While
+while (!dreamsAchieved) {
+    workHard();
+}
+```
+
+```dart Do-While
+do {
+    workHard();
+} while (!dreamsAchieved);
+```
+
+</CodeGroup>
+
+## Functions
+
+### Basic Functions
+
+```dart
+int add(int a, int b) {
+    return a + b;
+}
+
+int sum = add(2, 3);  // 5
+```
+
+### Arrow Syntax
+
+```dart
+bool isFav(Product product) => favProductsList.contains(product);
+
+// Single expression
+int add(a, b) => a + b;
+```
+
+### Anonymous Functions
+
+```dart
+const list = ['apples', 'bananas', 'oranges'];
+
+list.forEach((item) => print('${list.indexOf(item)}: $item'));
+// Output: 0: apples 1: bananas 2: oranges
+```
+
+## Classes and Objects
+
+### Basic Class
+
+```dart
+class Cat {
+    String name;
+    
+    void voice() {
+        print("Meow");
+    }
+}
+
+void main() {
+    Cat myCat = Cat();
+    myCat.name = "Kitty";
+    myCat.voice();  // Meow
+}
+```
+
+### Constructors
+
+```dart
+class Cat {
+    String name;
+    
+    Cat(this.name);  // Short constructor syntax
+}
+
+void main() {
+    Cat myCat = Cat("Kitty");
+    print(myCat.name);  // Kitty
+}
+```
+
+### Getters and Setters
+
+```dart
+class Cat {
+    String name;
+    
+    // Getter
+    String get catName {
+        return name;
+    }
+    
+    // Setter
+    void set catName(String name) {
+        this.name = name;
+    }
+}
+```
+
+## Null Safety
+
+### Nullable Types
+
+```dart
+int? nullableInt;      // Can be null
+String? nullableStr;   // Can be null
+
+int nonNullable = 5;   // Cannot be null
+```
+
+### Null-Aware Operators
+
+<CodeGroup>
+
+```dart Null Assignment
+int? x;
+x ??= 6;  // Assign only if null
+print(x);  // 6
+```
+
+```dart Null Coalescing
+print(null ?? 10);  // 10
+print(5 ?? 10);     // 5
+```
+
+```dart Conditional Property Access
+userObject?.userName?.toString()
+// Returns null if any part is null
+```
+
+</CodeGroup>
+
+## Async Programming
+
+### Future and Async/Await
+
+```dart
+Future<String> login() {
+    String userName = "User";
+    return Future.delayed(
+        Duration(seconds: 2),
+        () => userName
+    );
+}
+
+main() async {
+    print('Authenticating...');
+    print(await login());  // Waits for result
+}
+```
+
+## Extensions
+
+### Defining Extensions
+
+```dart
+extension StringExtensions on String {
+    bool get isValidEmail {
+        final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+        return emailRegExp.hasMatch(this);
+    }
+}
+
+print('test@example.com'.isValidEmail);  // true
+print('invalid'.isValidEmail);           // false
+```
+
+## Key Features
+
+<Accordion title="Spread Operator">
+  Insert multiple values into collections:
+  
+  ```dart
+  var list = [1, 2, 3];
+  var list2 = [0, ...list];
+  
+  print(list2.length);  // 4
+  print(list2);         // [0, 1, 2, 3]
+  ```
+</Accordion>
+
+<Accordion title="Cascade Notation">
+  Chain operations on the same object:
+  
+  ```dart
+  var user = User()
+    ..name = "Nicola"
+    ..email = "nicola@example.com"
+    ..age = 24;
+  ```
+</Accordion>
+
+<Accordion title="Enums">
+  Define a set of predefined constants:
+  
+  ```dart
+  enum TrafficLight { red, yellow, green }
+  
+  void handleLight(TrafficLight light) {
+      switch (light) {
+          case TrafficLight.red:
+              print('Stop');
+              break;
+          case TrafficLight.green:
+              print('Go');
+              break;
+      }
+  }
+  ```
+</Accordion>
+
+<Tip>
+Dart is optimized for building UI and is the foundation of the Flutter framework.
+</Tip>

@@ -1,0 +1,386 @@
+---
+title: Docker Cheat Sheet
+description: Quick reference for Docker commands and container management
+---
+
+This page documents the Docker commands available in the Cheat Sheets mobile app. Docker is a platform for developing, shipping, and running applications in containers.
+
+## Getting Started
+
+### Run Containers
+
+<CodeGroup>
+```bash Run in background (detached)
+docker run -d -p 80:80 docker/getting-started
+```
+
+```bash Run in foreground (interactive)
+docker run -it -p 8001:8080 --name my-nginx nginx
+```
+</CodeGroup>
+
+<Accordion title="Common Docker Run Flags">
+- `-d` - Run container in detached mode (background)
+- `-it` - Interactive bash mode
+- `-p 8001:8080` - Map port 8001 (host) to port 8080 (container)
+- `--name my-nginx` - Specify a container name
+- `nginx` - The image to use
+</Accordion>
+
+### General Commands
+
+| Command                             | Description                                      |
+|-------------------------------------|--------------------------------------------------|
+| `docker ps`                         | List running containers                          |
+| `docker ps -a`                      | List all containers                              |
+| `docker ps -s`                      | List running containers (with CPU / memory)      |
+| `docker images`                     | List all images                                  |
+| `docker exec -it <container> bash`  | Connecting to container                          |
+| `docker logs <container>`           | Shows container's console log                    |
+| `docker stop <container>`           | Stop a container                                 |
+| `docker restart <container>`        | Restart a container                              |
+| `docker rm <container>`             | Remove a container                               |
+| `docker port <container>`           | Shows container's port mapping                   |
+| `docker top <container>`            | List processes                                   |
+| `docker kill <container>`           | Kill a container                                 |
+
+<Note>
+The `<container>` parameter can be either the container ID or container name.
+</Note>
+
+## Docker Containers
+
+### Starting & Stopping
+
+| Command                   | Description                         |
+|---------------------------|-------------------------------------|
+| `docker start my-nginx`   | Start a container                   |
+| `docker stop my-nginx`    | Stop a container                    |
+| `docker restart my-nginx` | Restart a container                 |
+| `docker pause my-nginx`   | Pause a container                   |
+| `docker unpause my-nginx` | Unpause a container                 |
+| `docker wait my-nginx`    | Block until container stops         |
+| `docker kill my-nginx`    | Send SIGKILL to container           |
+| `docker attach my-nginx`  | Connect to an existing container    |
+
+### Container Information
+
+| Command                   | Description                            |
+|---------------------------|----------------------------------------|
+| `docker ps`               | List running containers                |
+| `docker ps -a`            | List all containers                    |
+| `docker logs my-nginx`    | Container logs                         |
+| `docker inspect my-nginx` | Inspect container details              |
+| `docker events my-nginx`  | Container events                       |
+| `docker port my-nginx`    | Public ports                           |
+| `docker top my-nginx`     | Running processes                      |
+| `docker stats my-nginx`   | Container resource usage               |
+| `docker diff my-nginx`    | Lists changes made to container        |
+
+### Creating Containers
+
+<CodeGroup>
+```yaml Common create options
+docker create [options] IMAGE
+  -a, --attach               # attach stdout/err
+  -i, --interactive          # attach stdin (interactive)
+  -t, --tty                  # pseudo-tty
+      --name NAME            # name your image
+  -p, --publish 5000:5000    # port map (host:container)
+      --expose 5432          # expose a port to containers
+  -P, --publish-all          # publish all ports
+      --link container:alias # linking
+  -v, --volume `pwd`:/app    # mount (absolute paths needed)
+  -e, --env NAME=hello       # env vars
+```
+
+```bash Example
+docker create --name my-nginx \
+  --expose 80 \
+  -p 8080:80 \
+  nginx
+```
+</CodeGroup>
+
+<Tip>
+Use `docker create` to create a container without starting it. Start it later with `docker start`.
+</Tip>
+
+### Execute Commands
+
+<CodeGroup>
+```bash Run command in container
+docker exec my-nginx ls /etc/nginx
+```
+
+```bash Interactive shell
+docker exec -it my-nginx bash
+```
+</CodeGroup>
+
+## Docker Images
+
+### Image Management
+
+| Command                            | Description                     |
+|------------------------------------|----------------------------------|
+| `docker images`                    | List images                      |
+| `docker rmi nginx`                 | Remove an image                  |
+| `docker load < ubuntu.tar.gz`      | Load a tarred repository         |
+| `docker load --input ubuntu.tar`   | Load a tarred repository         |
+| `docker save busybox > ubuntu.tar` | Save image to tar archive        |
+| `docker history`                   | Show history of an image         |
+| `docker commit nginx`              | Save container as image          |
+| `docker tag nginx eon01/nginx`     | Tag an image                     |
+| `docker push eon01/nginx`          | Push an image                    |
+
+### Building Images
+
+<CodeGroup>
+```bash From current directory
+docker build .
+```
+
+```bash From GitHub
+docker build github.com/creack/docker-firefox
+```
+
+```bash From stdin
+docker build - < Dockerfile
+docker build - < context.tar.gz
+```
+
+```bash With tag
+docker build -t eon/my-nginx .
+```
+
+```bash Different Dockerfile
+docker build -f myOtherDockerfile .
+```
+
+```bash From URL
+curl example.com/remote/Dockerfile | docker build -f - .
+```
+</CodeGroup>
+
+<Warning>
+Make sure you have a `.dockerignore` file to exclude unnecessary files from the build context.
+</Warning>
+
+## Docker Networking
+
+### Network Management
+
+<Accordion title="Remove Network">
+```bash
+docker network rm MyOverlayNetwork
+```
+</Accordion>
+
+<Accordion title="List Networks">
+```bash
+docker network ls
+```
+</Accordion>
+
+<Accordion title="Inspect Network">
+```bash
+docker network inspect MyOverlayNetwork
+```
+</Accordion>
+
+<Accordion title="Connect Container to Network">
+```bash
+docker network connect MyOverlayNetwork nginx
+```
+</Accordion>
+
+<Accordion title="Connect on Start">
+```bash
+docker run -it -d --network=MyOverlayNetwork nginx
+```
+</Accordion>
+
+<Accordion title="Disconnect from Network">
+```bash
+docker network disconnect MyOverlayNetwork nginx
+```
+</Accordion>
+
+### Creating Networks
+
+<CodeGroup>
+```bash Create overlay network
+docker network create -d overlay MyOverlayNetwork
+```
+
+```bash Create bridge network
+docker network create -d bridge MyBridgeNetwork
+```
+
+```bash Advanced network
+docker network create -d overlay \
+  --subnet=192.168.0.0/16 \
+  --subnet=192.170.0.0/16 \
+  --gateway=192.168.0.100 \
+  --gateway=192.170.0.100 \
+  --ip-range=192.168.1.0/24 \
+  --aux-address="my-router=192.168.1.5" \
+  --aux-address="my-switch=192.168.1.6" \
+  --aux-address="my-printer=192.170.1.5" \
+  --aux-address="my-nas=192.170.1.6" \
+  MyOverlayNetwork
+```
+</CodeGroup>
+
+## Cleanup Operations
+
+### Clean All
+
+<Warning>
+These commands will remove containers, images, and other Docker objects. Use with caution!
+</Warning>
+
+<CodeGroup>
+```bash Clean dangling resources
+docker system prune
+```
+
+```bash Clean everything
+docker system prune -a
+```
+</CodeGroup>
+
+<Tip>
+Dangling resources are images, containers, volumes, and networks that are not associated with a container.
+</Tip>
+
+### Containers
+
+<CodeGroup>
+```bash Stop all containers
+docker stop $(docker ps -a -q)
+```
+
+```bash Remove stopped containers
+docker container prune
+```
+</CodeGroup>
+
+### Images
+
+<CodeGroup>
+```bash Remove dangling images
+docker image prune
+```
+
+```bash Remove all unused images
+docker image prune -a
+```
+</CodeGroup>
+
+### Volumes
+
+```bash Remove unused volumes
+docker volume prune
+```
+
+<Note>
+This removes all volumes not used by at least one container.
+</Note>
+
+## Docker Hub & Registry
+
+### Docker Hub Commands
+
+| Command                       | Description                         |
+|-------------------------------|-------------------------------------|
+| `docker search search_word`   | Search docker hub for images        |
+| `docker pull user/image`      | Download an image from docker hub   |
+| `docker login`                | Authenticate to docker hub          |
+| `docker push user/image`      | Upload an image to docker hub       |
+
+### Registry Operations
+
+<Accordion title="Login to Registry">
+```bash
+docker login
+docker login localhost:8080
+```
+</Accordion>
+
+<Accordion title="Logout from Registry">
+```bash
+docker logout
+docker logout localhost:8080
+```
+</Accordion>
+
+<Accordion title="Search Image">
+```bash
+docker search nginx
+docker search nginx --stars=3 --no-trunc busybox
+```
+</Accordion>
+
+<Accordion title="Pull Image">
+```bash
+docker pull nginx
+docker pull eon01/nginx localhost:5000/myadmin/nginx
+```
+</Accordion>
+
+<Accordion title="Push Image">
+```bash
+docker push eon01/nginx
+docker push eon01/nginx localhost:5000/myadmin/nginx
+```
+</Accordion>
+
+### Batch Operations
+
+<Warning>
+These operations affect ALL containers/images!
+</Warning>
+
+| Command                             | Description             |
+|-------------------------------------|-------------------------|
+| `docker stop -f $(docker ps -a -q)` | Stop all containers     |
+| `docker rm -f $(docker ps -a -q)`   | Remove all containers   |
+| `docker rmi -f $(docker images -q)` | Remove all images       |
+
+## Volumes
+
+### Volume Operations
+
+<CodeGroup>
+```bash List volumes
+docker volume ls
+```
+
+```bash Cleanup unused volumes
+docker volume prune
+```
+</CodeGroup>
+
+<Tip>
+Volumes are the preferred mechanism for persisting data generated by and used by Docker containers.
+</Tip>
+
+## Tips & Best Practices
+
+<Tip>
+**Use .dockerignore**: Exclude files from the build context to speed up builds.
+</Tip>
+
+<Tip>
+**Multi-stage builds**: Use multi-stage builds to create smaller production images.
+</Tip>
+
+<Tip>
+**Health checks**: Add health checks to your containers to monitor their status.
+</Tip>
+
+<Note>
+For more information, visit the [official Docker documentation](https://docs.docker.com/).
+</Note>

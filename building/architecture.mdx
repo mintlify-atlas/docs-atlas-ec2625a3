@@ -1,0 +1,374 @@
+---
+title: Architecture
+description: Understanding the Cheat Sheets app structure, design patterns, and technical stack
+---
+
+## Overview
+
+Cheat Sheets follows a feature-first architecture with clean separation of concerns, utilizing Flutter best practices and modern state management patterns.
+
+## Project Structure
+
+The app is organized with a feature-first approach:
+
+```
+lib/src/
+├── app.dart                    # Main app widget
+├── constants/                  # App-wide constants
+├── extensions/                 # Dart extensions
+│   ├── context.dart
+│   ├── nullable.dart
+│   ├── padding.dart
+│   ├── string.dart
+│   └── text_style.dart
+├── features/                   # Feature modules
+│   ├── cheatsheets/           # Cheatsheets feature
+│   │   ├── data/              # Data layer
+│   │   ├── domain/            # Domain models
+│   │   └── presentation/      # UI layer
+│   ├── coupons/               # Coupons feature
+│   └── settings/              # Settings feature
+├── router/                     # Navigation
+│   ├── app_router.dart
+│   └── app_routes.dart
+├── shared/                     # Shared resources
+│   ├── exceptions/
+│   ├── providers/
+│   ├── screens/
+│   ├── services/
+│   ├── utils/
+│   └── widgets/
+└── theme/                      # Theming
+    └── app_theme.dart
+```
+
+## Feature Architecture
+
+Each feature follows a clean architecture pattern with three distinct layers:
+
+<Steps>
+  <Step title="Domain Layer">
+    Contains business logic and models:
+    - Pure Dart models (no framework dependencies)
+    - Domain entities and value objects
+    - Uses `freezed` for immutable data classes
+    
+    Example: `features/cheatsheets/domain/cheatsheet.dart`
+  </Step>
+
+  <Step title="Data Layer">
+    Handles data sources and repositories:
+    - **Data Sources**: API clients, local storage
+      - `remote_cheatsheet_data_source.dart` - API calls
+      - `asset_cheatsheet_data_source.dart` - Local assets
+    - **Repositories**: Abstract data access
+      - `cheatsheet_repository.dart` - Interface
+      - `cheatsheet_repository_impl.dart` - Implementation
+    - Uses `fpdart` for functional error handling
+    
+    <Note>
+      The data layer uses the `Either` type from `fpdart` to handle errors functionally, returning `Either<Exception, Data>` instead of throwing exceptions.
+    </Note>
+  </Step>
+
+  <Step title="Presentation Layer">
+    UI components and state management:
+    - **Providers**: Riverpod state management
+    - **Screens**: Full-page UI components
+    - **Widgets**: Reusable UI components
+    
+    Example structure:
+    ```
+    presentation/
+    ├── providers/
+    │   ├── cheatsheet_providers.dart
+    │   └── cheatsheet_search_controller.dart
+    ├── screens/
+    │   ├── cheatsheet_list_screen.dart
+    │   ├── cheatsheet_detail_screen.dart
+    │   └── cheatsheet_search_screen.dart
+    └── widgets/
+        └── custom_list_tile.dart
+    ```
+  </Step>
+</Steps>
+
+## State Management
+
+The app uses **Riverpod 2.6+** with code generation for type-safe state management.
+
+### Key Concepts
+
+<Accordion title="Riverpod Providers">
+  Providers are the core of state management:
+  
+  ```dart
+  // Code-generated provider
+  @riverpod
+  class CheatsheetList extends _$CheatsheetList {
+    @override
+    Future<List<CheatsheetMeta>> build() async {
+      // Fetch data
+    }
+  }
+  ```
+  
+  The app uses:
+  - `@riverpod` annotation for code generation
+  - `riverpod_generator` for boilerplate reduction
+  - `hooks_riverpod` for widget integration
+</Accordion>
+
+<Accordion title="Provider Types">
+  Different providers for different use cases:
+  
+  - **FutureProvider**: Async data fetching
+  - **StateProvider**: Simple mutable state
+  - **NotifierProvider**: Complex state logic
+  - **StreamProvider**: Real-time data streams
+  
+  See `lib/src/features/cheatsheets/presentation/providers/` for examples.
+</Accordion>
+
+<Accordion title="Dependency Injection">
+  Riverpod handles dependency injection:
+  
+  ```dart
+  @riverpod
+  CheatsheetRepository cheatsheetRepository(CheatsheetRepositoryRef ref) {
+    final dataSource = ref.watch(cheatsheetDataSourceProvider);
+    return CheatsheetRepositoryImpl(dataSource: dataSource);
+  }
+  ```
+  
+  This creates a dependency graph that's automatically managed.
+</Accordion>
+
+## Routing & Navigation
+
+The app uses **GoRouter 15.1+** for declarative routing.
+
+### Router Configuration
+
+<CodeGroup>
+```dart app_router.dart
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final appRouter = GoRouter(
+  initialLocation: "/cheatsheet",
+  navigatorKey: _rootNavigatorKey,
+  routes: $appRoutes, // Generated routes
+);
+```
+
+```dart app_routes.dart
+// Uses go_router_builder for type-safe routes
+@TypedGoRoute<CheatsheetRoute>(
+  path: '/cheatsheet',
+  routes: [
+    TypedGoRoute<CheatsheetDetailRoute>(
+      path: ':id',
+    ),
+  ],
+)
+class CheatsheetRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CheatsheetScreen();
+  }
+}
+```
+</CodeGroup>
+
+<Tip>
+  The app uses `go_router_builder` for code generation, providing type-safe navigation with compile-time route validation.
+</Tip>
+
+## Data Flow
+
+The typical data flow in the app:
+
+<Steps>
+  <Step title="User Interaction">
+    User interacts with a widget (e.g., taps a cheat sheet)
+  </Step>
+
+  <Step title="Provider Notification">
+    Widget calls a provider method or navigates via GoRouter
+  </Step>
+
+  <Step title="Repository Layer">
+    Provider calls repository which returns `Either<Exception, Data>`
+  </Step>
+
+  <Step title="Data Source">
+    Repository delegates to data source (remote API or local assets)
+  </Step>
+
+  <Step title="Error Handling">
+    Errors are mapped to app-specific exceptions:
+    ```dart
+    TaskEither<AppException, List<CheatsheetMeta>> list() {
+      return _dataSource.list()
+        .mapLeft((error) => error.toAppException());
+    }
+    ```
+  </Step>
+
+  <Step title="UI Update">
+    Riverpod notifies widgets, which rebuild with new data
+  </Step>
+</Steps>
+
+## Theming
+
+The app uses **FlexColorScheme 8.4+** for advanced theming.
+
+### Theme Configuration
+
+<CodeGroup>
+```dart Light Theme
+static ThemeData light = FlexThemeData.light(
+  fontFamily: GoogleFonts.roboto().fontFamily,
+  scheme: FlexScheme.materialBaseline,
+  subThemesData: const FlexSubThemesData(
+    interactionEffects: true,
+    inputDecoratorIsFilled: true,
+    inputDecoratorBorderType: FlexInputBorderType.outline,
+    appBarCenterTitle: true,
+  ),
+  visualDensity: FlexColorScheme.comfortablePlatformDensity,
+);
+```
+
+```dart Dark Theme
+static ThemeData dark = FlexThemeData.dark(
+  fontFamily: GoogleFonts.roboto().fontFamily,
+  scheme: FlexScheme.materialBaseline,
+  subThemesData: const FlexSubThemesData(
+    interactionEffects: true,
+    blendOnColors: true,
+    appBarBackgroundSchemeColor: SchemeColor.black,
+  ),
+  visualDensity: FlexColorScheme.comfortablePlatformDensity,
+);
+```
+</CodeGroup>
+
+### Theme Features
+
+- **Material 3** design with custom color schemes
+- **Google Fonts** (Roboto) for typography
+- **Custom theme extensions** for app-specific colors
+- **Dynamic theme switching** via Riverpod state
+
+## Key Dependencies
+
+The app leverages these core packages:
+
+<AccordionGroup>
+  <Accordion title="State Management">
+    - `flutter_riverpod: ^2.6.1` - Core state management
+    - `hooks_riverpod: ^2.6.1` - Widget hooks integration
+    - `riverpod_annotation: ^2.6.1` - Code generation annotations
+    - `riverpod_generator: ^2.6.5` - Provider code generation
+    - `riverpod_lint: ^2.6.5` - Linting rules
+  </Accordion>
+
+  <Accordion title="Routing">
+    - `go_router: ^15.1.1` - Declarative routing
+    - `go_router_builder: ^2.9.0` - Type-safe route generation
+  </Accordion>
+
+  <Accordion title="Code Generation">
+    - `freezed: ^3.0.6` - Immutable models
+    - `json_serializable: ^6.9.5` - JSON serialization
+    - `build_runner: ^2.4.15` - Build tool
+    - `envied: ^1.1.1` - Environment variables
+  </Accordion>
+
+  <Accordion title="UI & Theming">
+    - `flex_color_scheme: ^8.4.0` - Advanced theming
+    - `google_fonts: ^7.1.0` - Font integration
+    - `flutter_animate: ^4.5.2` - Animations
+    - `flutter_svg: ^2.1.0` - SVG support
+  </Accordion>
+
+  <Accordion title="Networking">
+    - `dio: ^5.8.0` - HTTP client
+    - `flutter_cache_manager: ^3.4.1` - Caching
+    - `internet_connection_checker_plus: ^2.9.1` - Connectivity
+  </Accordion>
+
+  <Accordion title="Content Rendering">
+    - `markdown_widget: ^2.3.2` - Markdown rendering
+    - `flutter_highlight: ^0.7.0` - Code syntax highlighting
+    - `html2md: ^1.3.2` - HTML to Markdown conversion
+  </Accordion>
+
+  <Accordion title="Utilities">
+    - `fpdart: ^1.1.1` - Functional programming utilities
+    - `collection: ^1.19.0` - Collection utilities
+    - `gap: ^3.0.1` - Spacing widgets
+    - `shared_preferences: ^2.5.3` - Local storage
+  </Accordion>
+</AccordionGroup>
+
+## Code Generation
+
+The app heavily relies on code generation for:
+
+1. **Riverpod Providers** (`@riverpod`)
+2. **GoRouter Routes** (`@TypedGoRoute`)
+3. **Freezed Models** (`@freezed`)
+4. **JSON Serialization** (`@JsonSerializable`)
+5. **Environment Variables** (`@Envied`)
+
+<Warning>
+  Always run `dart run build_runner build` after:
+  - Adding new providers
+  - Modifying routes
+  - Changing model classes
+  - Updating `.env` files
+</Warning>
+
+## Testing Strategy
+
+The app is structured to support:
+
+- **Unit Tests**: Domain logic and utilities
+- **Widget Tests**: Individual components
+- **Integration Tests**: Full user flows
+- **Provider Tests**: Riverpod state management
+
+<Note>
+  The clean architecture makes testing easier by isolating dependencies and using interfaces.
+</Note>
+
+## Performance Considerations
+
+<CardGroup cols={2}>
+  <Card title="Lazy Loading" icon="spinner">
+    Providers load data on-demand and cache results
+  </Card>
+  <Card title="Code Generation" icon="code">
+    Reduces runtime reflection, improving performance
+  </Card>
+  <Card title="Efficient Rebuilds" icon="rotate">
+    Riverpod ensures minimal widget rebuilds
+  </Card>
+  <Card title="Image Caching" icon="image">
+    `flutter_cache_manager` caches network images
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Contributing" icon="code-pull-request" href="/contributing">
+    Learn how to contribute to the project
+  </Card>
+  <Card title="Setup Guide" icon="screwdriver-wrench" href="/building/setup">
+    Set up your development environment
+  </Card>
+</CardGroup>

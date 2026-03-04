@@ -1,0 +1,274 @@
+---
+title: Python Cheat Sheet
+description: A comprehensive quick reference for Python 3 programming language covering syntax, data types, control flow, functions, and more.
+---
+
+## Overview
+
+Python is a lightweight, interpreted programming language known for its simplicity and readability. This cheat sheet covers the essential Python concepts available in the mobile app's quick reference.
+
+## Getting Started
+
+### Hello World
+
+The classic first program in Python:
+
+```python
+print("Hello, World!")
+# Output: Hello, World!
+```
+
+### Variables
+
+Python doesn't require explicit variable declaration:
+
+```python
+age = 18      # age is of type int
+name = "John" # name is now of type str
+print(name)
+```
+
+<Note>
+Python can't declare a variable without assignment.
+</Note>
+
+## Data Types
+
+### Primitive Types
+
+| Type | Description |
+|------|-------------|
+| `str` | Text |
+| `int`, `float`, `complex` | Numeric |
+| `list`, `tuple`, `range` | Sequence |
+| `dict` | Mapping |
+| `set`, `frozenset` | Set |
+| `bool` | Boolean |
+| `bytes`, `bytearray`, `memoryview` | Binary |
+
+### Strings
+
+<CodeGroup>
+
+```python Single and Multi-line
+hello = "Hello World"
+hello = 'Hello World'
+
+multi_string = """Multiline Strings
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit """
+```
+
+```python String Slicing
+msg = "Hello, World!"
+print(msg[2:5])  # Output: llo
+```
+
+</CodeGroup>
+
+### Numbers
+
+```python
+x = 1    # int
+y = 2.8  # float
+z = 1j   # complex
+
+print(type(x))  # <class 'int'>
+```
+
+### Lists
+
+```python
+mylist = []
+mylist.append(1)
+mylist.append(2)
+for item in mylist:
+    print(item)  # prints out 1,2
+```
+
+### Dictionaries
+
+```python
+empty_dict = {}
+a = {"one": 1, "two": 2, "three": 3}
+print(a["one"])  # Output: 1
+
+a.update({"four": 4})
+print(a.keys())  # dict_keys(['one', 'two', 'three', 'four'])
+```
+
+## Control Flow
+
+### If-Else Statements
+
+```python
+num = 200
+if num > 0:
+    print("num is greater than 0")
+else:
+    print("num is not greater than 0")
+```
+
+### Loops
+
+<Tabs>
+  <Tab title="For Loop">
+    ```python
+    for item in range(6):
+        if item == 3: break
+        print(item)
+    else:
+        print("Finally finished!")
+    ```
+  </Tab>
+  <Tab title="While Loop">
+    ```python
+    x = 0
+    while x < 4:
+        print(x)
+        x += 1  # Shorthand for x = x + 1
+    ```
+  </Tab>
+  <Tab title="For-Each">
+    ```python
+    animals = ["dog", "cat", "mouse"]
+    for i, value in enumerate(animals):
+        print(i, value)
+    # Output: 0 dog 1 cat 2 mouse
+    ```
+  </Tab>
+</Tabs>
+
+## Functions
+
+### Basic Functions
+
+```python
+def my_function():
+    print("Hello from a function")
+
+my_function()
+# Output: Hello from a function
+```
+
+### Functions with Parameters
+
+<CodeGroup>
+
+```python Basic Return
+def add(x, y):
+    return x + y
+
+result = add(5, 6)  # Returns: 11
+```
+
+```python Default Values
+def add(x, y=10):
+    return x + y
+
+print(add(5))      # Output: 15
+print(add(5, 20))  # Output: 25
+```
+
+```python Lambda Functions
+# Anonymous functions
+add = lambda x, y: x + y
+print(add(2, 3))  # Output: 5
+```
+
+</CodeGroup>
+
+## File Handling
+
+### Reading Files
+
+```python
+with open("myfile.txt", "r", encoding='utf8') as file:
+    for line in file:
+        print(line)
+```
+
+### Writing Files
+
+```python
+contents = {"aa": 12, "bb": 21}
+with open("myfile.txt", "w+") as file:
+    file.write(str(contents))
+```
+
+## Classes and Objects
+
+### Defining Classes
+
+```python
+class Animal:
+    def __init__(self, voice):
+        self.voice = voice
+
+cat = Animal('Meow')
+print(cat.voice)  # Output: Meow
+```
+
+### Class Methods
+
+```python
+class Dog:
+    def bark(self):
+        print("Ham-Ham")
+
+charlie = Dog()
+charlie.bark()  # Output: "Ham-Ham"
+```
+
+## Key Features
+
+<Accordion title="String Formatting">
+  Python offers multiple ways to format strings:
+  
+  ```python
+  name = "John"
+  age = 23
+  
+  # Old style
+  print("%s is %d years old." % (name, age))
+  
+  # Format method
+  print("{} is {} years old.".format(name, age))
+  
+  # F-strings (Python 3.6+)
+  print(f"{name} is {age} years old.")
+  ```
+</Accordion>
+
+<Accordion title="List Comprehensions">
+  Create lists in a concise way:
+  
+  ```python
+  # Filter odd numbers
+  result = [x for x in [3, 4, 5, 6, 7] if x > 5]
+  # Output: [6, 7]
+  
+  # Square numbers
+  squares = [x ** 2 for x in range(1, 11) if x % 2 == 1]
+  # Output: [1, 9, 25, 49, 81]
+  ```
+</Accordion>
+
+<Accordion title="Exception Handling">
+  Handle errors gracefully:
+  
+  ```python
+  try:
+      result = 10 / 0
+  except ZeroDivisionError:
+      print("Cannot divide by zero!")
+  except Exception as e:
+      print(f"An error occurred: {e}")
+  finally:
+      print("Cleanup code here")
+  ```
+</Accordion>
+
+<Tip>
+Python uses indentation (whitespace) to define code blocks instead of curly braces like many other languages.
+</Tip>

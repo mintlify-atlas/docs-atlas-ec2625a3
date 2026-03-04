@@ -1,0 +1,63 @@
+{
+  "projectType": "frontend",
+  "projectName": "Cheat Sheets",
+  "projectDescription": "A comprehensive Flutter mobile app providing quick reference guides for learning Python, Rust, Swift, JavaScript, Kotlin, Go, Git, and more programming languages.",
+  "theme": "palm",
+  "primaryColor": "#94cb04",
+  "lightColor": "#545454",
+  "darkColor": null,
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": ["introduction", "installation", "quickstart"]
+      },
+      {
+        "group": "Programming Languages",
+        "pages": [
+          "languages/python",
+          "languages/rust",
+          "languages/swift",
+          "languages/javascript",
+          "languages/kotlin",
+          "languages/go",
+          "languages/dart",
+          "languages/java",
+          "languages/cpp"
+        ]
+      },
+      {
+        "group": "Tools & Commands",
+        "pages": [
+          "tools/git",
+          "tools/github-cli",
+          "tools/docker",
+          "tools/vim"
+        ]
+      },
+      {
+        "group": "Building & Contributing",
+        "pages": [
+          "building/setup",
+          "building/architecture",
+          "contributing"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Quick reference cheat sheets for 15+ programming languages",
+    "Beautiful Flutter mobile app for iOS and Android",
+    "Offline-ready content with markdown rendering",
+    "Dark mode support with customizable themes",
+    "Search functionality across all cheat sheets",
+    "Category-based organization (Programming, Toolkit, Other)"
+  ],
+  "publicApiSurface": [
+    "CheatSheet model (id, title, categories, background, intro, sections)",
+    "CheatSheetRepository (data fetching and caching)",
+    "Router configuration (go_router navigation)",
+    "Theme configuration (FlexColorScheme)",
+    "Settings providers (preferences, theme mode)"
+  ]
+}

@@ -1,0 +1,395 @@
+---
+title: JavaScript Cheat Sheet
+description: Comprehensive quick reference for JavaScript covering variables, functions, arrays, objects, DOM manipulation, and modern ES6+ features.
+---
+
+## Overview
+
+JavaScript is a lightweight, interpreted programming language that powers interactive web applications. This cheat sheet covers essential JavaScript concepts from the mobile app.
+
+## Getting Started
+
+### Console Output
+
+```javascript
+console.log("Hello world!");  // => Hello world!
+console.warn("hello %s", "CheatSheets.zip");
+console.error(new Error("Oops!"));
+```
+
+### Variables
+
+<CodeGroup>
+
+```javascript let
+let count;
+console.log(count);  // => undefined
+count = 10;
+console.log(count);  // => 10
+```
+
+```javascript const
+const numberOfColumns = 4;
+// TypeError: Assignment to constant...
+numberOfColumns = 8;
+```
+
+```javascript var (Legacy)
+var a;
+console.log(a);  // => undefined
+```
+
+</CodeGroup>
+
+<Note>
+Use `const` by default, `let` when you need to reassign, and avoid `var`.
+</Note>
+
+## Data Types
+
+### Primitive Types
+
+```javascript
+let amount = 6;              // Number
+let price = 4.99;            // Number
+let name = "Tammy";          // String
+let found = false;           // Boolean
+let x = null;                // Null
+let y;                       // Undefined
+```
+
+### Strings
+
+<Tabs>
+  <Tab title="Basic">
+    ```javascript
+    let single = 'Single quotes';
+    let double = "Double quotes";
+    
+    console.log(single.length);  // 14
+    ```
+  </Tab>
+  <Tab title="Template Literals">
+    ```javascript
+    let age = 7;
+    
+    // String interpolation
+    let message = `Tommy is ${age} years old.`;
+    
+    // Multi-line
+    let html = `
+      <div>
+        <p>Hello</p>
+      </div>
+    `;
+    ```
+  </Tab>
+</Tabs>
+
+### Arrays
+
+```javascript
+const fruits = ["apple", "orange", "banana"];
+const data = [1, "chicken", false];  // Mixed types
+
+console.log(fruits[0]);     // apple
+console.log(fruits.length); // 3
+```
+
+### Objects
+
+```javascript
+const person = {
+    name: "Tom",
+    age: 22,
+    city: "New York"
+};
+
+console.log(person.name);     // Tom
+console.log(person["age"]);   // 22
+```
+
+## Operators
+
+### Arithmetic
+
+```javascript
+5 + 5   // 10 - Addition
+10 - 5  // 5  - Subtraction
+5 * 10  // 50 - Multiplication
+10 / 5  // 2  - Division
+10 % 5  // 0  - Modulo
+```
+
+### Comparison
+
+```javascript
+1 > 3        // false
+3 > 1        // true
+250 >= 250   // true
+1 === 1      // true - Strict equality
+1 === "1"    // false - Different types
+1 == "1"     // true - Type coercion
+```
+
+<Tip>
+Always use `===` (strict equality) instead of `==` to avoid unexpected type coercion.
+</Tip>
+
+### Logical
+
+```javascript
+true && true    // true
+1 > 2 && 2 > 1  // false
+true || false   // true
+!true           // false
+
+// Nullish coalescing
+null ?? "default"      // "default"
+undefined ?? "default" // "default"
+0 ?? "default"         // 0
+```
+
+## Control Flow
+
+### If Statements
+
+<CodeGroup>
+
+```javascript Basic
+const isMailSent = true;
+
+if (isMailSent) {
+    console.log("Mail sent!");
+}
+```
+
+```javascript If-Else-If
+const size = 10;
+
+if (size > 100) {
+    console.log("Big");
+} else if (size > 20) {
+    console.log("Medium");
+} else if (size > 4) {
+    console.log("Small");
+} else {
+    console.log("Tiny");
+}
+// Output: Small
+```
+
+```javascript Ternary
+var x = 1;
+result = x == 1 ? true : false;  // true
+```
+
+</CodeGroup>
+
+### Switch
+
+```javascript
+const food = "salad";
+
+switch (food) {
+    case "oyster":
+        console.log("The taste of the sea");
+        break;
+    case "pizza":
+        console.log("A delicious pie");
+        break;
+    default:
+        console.log("Enjoy your meal");
+}
+```
+
+## Loops
+
+### For Loops
+
+<Tabs>
+  <Tab title="Standard">
+    ```javascript
+    for (let i = 0; i < 4; i++) {
+        console.log(i);
+    }
+    // Output: 0, 1, 2, 3
+    ```
+  </Tab>
+  <Tab title="For...of">
+    ```javascript
+    const fruits = ["apple", "orange", "banana"];
+    
+    for (let fruit of fruits) {
+        console.log(fruit);
+    }
+    // Output: apple, orange, banana
+    ```
+  </Tab>
+  <Tab title="For...in">
+    ```javascript
+    const person = {name: "John", age: 30};
+    
+    for (let key in person) {
+        console.log(key + ": " + person[key]);
+    }
+    // Output: name: John, age: 30
+    ```
+  </Tab>
+</Tabs>
+
+### While Loops
+
+```javascript
+let i = 0;
+while (i < 5) {
+    console.log(i);
+    i++;
+}
+// Output: 0 1 2 3 4
+```
+
+## Functions
+
+### Function Declaration
+
+```javascript
+function sum(num1, num2) {
+    return num1 + num2;
+}
+
+sum(3, 6);  // 9
+```
+
+### Arrow Functions (ES6)
+
+<CodeGroup>
+
+```javascript Multiple Parameters
+const sum = (param1, param2) => {
+    return param1 + param2;
+};
+console.log(sum(2, 5));  // 7
+```
+
+```javascript Single Parameter
+const checkWeight = (weight) => {
+    console.log(`Weight: ${weight}`);
+};
+checkWeight(25);  // Weight: 25
+```
+
+```javascript Concise
+const multiply = (a, b) => a * b;
+console.log(multiply(2, 30));  // 60
+```
+
+</CodeGroup>
+
+## Arrays Methods
+
+### Common Methods
+
+<Tabs>
+  <Tab title="push/pop">
+    ```javascript
+    const cart = ["apple", "orange"];
+    cart.push("pear");     // Add to end
+    // ["apple", "orange", "pear"]
+    
+    const last = cart.pop(); // Remove from end
+    // last = "pear"
+    ```
+  </Tab>
+  <Tab title="map">
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const doubled = numbers.map(n => n * 2);
+    // [2, 4, 6, 8]
+    ```
+  </Tab>
+  <Tab title="filter">
+    ```javascript
+    const numbers = [4, 11, 42, 14, 39];
+    const filtered = numbers.filter(n => n > 5);
+    // [11, 42, 14, 39]
+    ```
+  </Tab>
+  <Tab title="reduce">
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const sum = numbers.reduce((acc, cur) => acc + cur, 0);
+    // 10
+    ```
+  </Tab>
+</Tabs>
+
+## Objects
+
+### Creating Objects
+
+```javascript
+const person = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+    fullName: function() {
+        return this.firstName + " " + this.lastName;
+    }
+};
+
+console.log(person.fullName());  // John Doe
+```
+
+### Object Destructuring
+
+```javascript
+const person = {name: "Tom", age: 22};
+const {name, age} = person;
+
+console.log(name);  // Tom
+console.log(age);   // 22
+```
+
+## ES6+ Features
+
+<Accordion title="Spread Operator">
+  Expand arrays and objects:
+  
+  ```javascript
+  const arr1 = [1, 2, 3];
+  const arr2 = [...arr1, 4, 5];
+  // [1, 2, 3, 4, 5]
+  
+  const obj1 = {a: 1, b: 2};
+  const obj2 = {...obj1, c: 3};
+  // {a: 1, b: 2, c: 3}
+  ```
+</Accordion>
+
+<Accordion title="Promises">
+  Handle asynchronous operations:
+  
+  ```javascript
+  const promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("Done!"), 1000);
+  });
+  
+  promise.then(result => console.log(result));
+  // After 1 second: "Done!"
+  ```
+</Accordion>
+
+<Accordion title="Async/Await">
+  Modern asynchronous syntax:
+  
+  ```javascript
+  async function fetchData() {
+      const response = await fetch('api/data');
+      const data = await response.json();
+      return data;
+  }
+  
+  fetchData().then(data => console.log(data));
+  ```
+</Accordion>

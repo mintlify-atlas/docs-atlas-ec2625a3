@@ -1,0 +1,290 @@
+---
+title: Git Cheat Sheet
+description: Quick reference for commonly used Git commands and workflows
+---
+
+This page documents the Git commands available in the Cheat Sheets mobile app. Git is a distributed version control system for tracking changes in source code during software development.
+
+## Create a Repository
+
+<CodeGroup>
+```bash Initialize new repository
+git init [project name]
+```
+
+```bash Clone repository
+git clone git_url
+```
+
+```bash Clone to specific directory
+git clone git_url my_directory
+```
+</CodeGroup>
+
+<Tip>
+Use `git init` to create a new local repository in the current directory.
+</Tip>
+
+## Making Changes
+
+### Check Status
+
+Show modified files in working directory, staged for your next commit:
+
+```bash
+git status
+```
+
+### Staging Files
+
+<CodeGroup>
+```bash Stage single file
+git add [file]
+```
+
+```bash Stage all changes
+git add .
+```
+</CodeGroup>
+
+### Committing Changes
+
+<CodeGroup>
+```bash Commit staged files
+git commit -m "commit message"
+```
+
+```bash Commit all tracked files
+git commit -am "commit message"
+```
+</CodeGroup>
+
+<Note>
+Always write clear, descriptive commit messages to help your team understand what changed.
+</Note>
+
+## Undoing Changes
+
+<Accordion title="Discard Changes">
+
+Discard changes in working directory which is not staged:
+
+```bash
+git restore [file]
+```
+
+Unstage a file:
+
+```bash
+git restore --staged [file]
+```
+
+Alternatively, unstage keeping file changes:
+
+```bash
+git reset [file]
+```
+</Accordion>
+
+<Accordion title="Revert to Last Commit">
+
+<Warning>
+This operation is destructive and cannot be undone!
+</Warning>
+
+Revert everything to the last commit:
+
+```bash
+git reset --hard
+```
+</Accordion>
+
+## Viewing Differences
+
+<CodeGroup>
+```bash Unstaged changes
+git diff
+```
+
+```bash Staged changes
+git diff --staged
+```
+</CodeGroup>
+
+## Rebasing
+
+Apply any commits of current branch ahead of specified one:
+
+```bash
+git rebase [branch]
+```
+
+## Configuration
+
+<CodeGroup>
+```bash Set name
+git config --global user.name "name"
+```
+
+```bash Set email
+git config --global user.email "email"
+```
+
+```bash Enable colors
+git config --global color.ui auto
+```
+
+```bash Edit config
+git config --global --edit
+```
+</CodeGroup>
+
+## Git Tricks & Tips
+
+### Rename Branch
+
+<Steps>
+  <Step title="Rename to new_name">
+    ```bash
+    git branch -m <new_name>
+    ```
+  </Step>
+  
+  <Step title="Push and reset">
+    ```bash
+    git push origin -u <new_name>
+    ```
+  </Step>
+  
+  <Step title="Delete remote branch">
+    ```bash
+    git push origin --delete <old>
+    ```
+  </Step>
+</Steps>
+
+### Search & Log
+
+<CodeGroup>
+```bash Search by content
+git log -S'<a term in the source>'
+```
+
+```bash File history
+git log -p <file_name>
+```
+
+```bash Visualization
+git log --pretty=oneline --graph --decorate --all
+```
+</CodeGroup>
+
+### Branch Operations
+
+<CodeGroup>
+```bash List with upstreams
+git branch -vv
+```
+
+```bash Switch to previous
+git checkout -
+```
+
+```bash Remote branches only
+git branch -r
+```
+
+```bash Checkout single file
+git checkout <branch> -- <file>
+```
+</CodeGroup>
+
+### Rewriting History
+
+<Warning>
+Be careful when rewriting history, especially on shared branches!
+</Warning>
+
+<CodeGroup>
+```bash Amend commit message
+git commit --amend -m "new message"
+```
+
+```bash Amend without changing message
+git commit --amend --no-edit
+```
+</CodeGroup>
+
+### Git Aliases
+
+Create shortcuts for common commands:
+
+```bash
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+```
+
+## Advanced Git
+
+### Submodules
+
+<Accordion title="Create Submodule">
+```bash
+git submodule add <repository_url> <path>
+```
+</Accordion>
+
+<Accordion title="Clone with Submodules">
+```bash
+git clone --recursive <repository_url>
+```
+</Accordion>
+
+<Accordion title="Update Submodules">
+```bash
+git submodule update
+```
+
+Pull latest changes:
+```bash
+git submodule update --remote
+```
+</Accordion>
+
+<Accordion title="Remove Submodule">
+```bash
+git submodule deinit <path>
+git rm <path>
+git commit -m "Removed submodule"
+```
+</Accordion>
+
+### Cherry-picking
+
+<Tip>
+Cherry-picking allows you to apply a specific commit from one branch to another.
+</Tip>
+
+```bash
+git cherry-pick <commit_hash>
+```
+
+### Reflog
+
+Display the reflog, showing the history of HEAD and branch movements:
+
+```bash
+git reflog
+```
+
+Restore lost commit or branch:
+
+```bash
+git checkout <commit_or_branch_hash>
+```
+
+<Note>
+Reflog is extremely useful for recovering lost commits or branches.
+</Note>

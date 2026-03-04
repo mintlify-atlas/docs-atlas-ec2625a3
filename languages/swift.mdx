@@ -1,0 +1,382 @@
+---
+title: Swift Cheat Sheet
+description: Quick reference for Swift programming language covering syntax, variables, control flow, functions, and iOS/macOS development concepts.
+---
+
+## Overview
+
+Swift is Apple's modern programming language for iOS, iPadOS, macOS, and other Apple platforms. This cheat sheet covers essential Swift concepts from the mobile app's quick reference.
+
+## Getting Started
+
+### Variables and Constants
+
+<CodeGroup>
+
+```swift Variables
+var score = 0  // Variable (mutable)
+var greeting = "Hello"
+var numberOfToys = 8
+var isMorning = true
+
+numberOfToys += 1
+print(numberOfToys)  // prints "9"
+```
+
+```swift Constants
+let pi = 3.14  // Constant (immutable)
+let goldenRatio = 1.618
+```
+
+</CodeGroup>
+
+### Type Annotations
+
+```swift
+var greeting: String = "Hello"
+var numberOfToys: Int = 8
+var isMorning: Bool = true
+var price: Double = 8.99
+```
+
+## Data Types
+
+### Basic Types
+
+| Type | Example | Description |
+|------|---------|-------------|
+| `Int` | `var age = 25` | Integer numbers |
+| `Double` | `var pi = 3.14` | Floating point |
+| `String` | `var name = "John"` | Text |
+| `Bool` | `var isTrue = true` | Boolean |
+| `Character` | `var letter: Character = "A"` | Single character |
+
+### Strings
+
+<Tabs>
+  <Tab title="Basic">
+    ```swift
+    var community_name = "AXIAL"
+    let no_of_members: &str = "ten"
+    
+    print("The name is \(community_name)")
+    ```
+  </Tab>
+  <Tab title="Multi-line">
+    ```swift
+    let myLongString = """
+    Swift?
+    This is my favorite language!
+    Yeah!
+    """
+    ```
+  </Tab>
+  <Tab title="Interpolation">
+    ```swift
+    var apples = 6
+    print("I have \(apples) apples!")  // I have 6 apples!
+    ```
+  </Tab>
+</Tabs>
+
+### Tuples
+
+```swift
+let player = ("Maya", 5, 150)
+
+print(player)           // ("Maya", 5, 150)
+print(player.0)         // Maya
+print("\(player.0): level \(player.1), \(player.2) pts")
+
+// Named tuples
+let player2 = (name: "Maya", level: 5)
+let (currentName, curLevel) = player2
+print("\(currentName): level \(curLevel)")  // Maya: level 5
+```
+
+## Operators
+
+### Arithmetic Operators
+
+```swift
+let sum = 5 + 3        // 8
+let difference = 10 - 2 // 8
+let product = 4 * 2     // 8
+let quotient = 16 / 2   // 8
+let remainder = 17 % 9  // 8
+```
+
+### Comparison Operators
+
+```swift
+5 > 1      // true
+6 < 10     // true
+2 >= 3     // false
+3 <= 5     // true
+"A" == "a" // false
+"B" != "b" // true
+```
+
+### Compound Assignment
+
+```swift
+var batteryPercentage = 80
+batteryPercentage += 10  // Short syntax
+// Same as: batteryPercentage = batteryPercentage + 10
+```
+
+## Control Flow
+
+### If Statements
+
+<CodeGroup>
+
+```swift Basic If
+var morning = true
+
+if morning {
+    print("Rise and shine!")
+}
+```
+
+```swift If-Else-If
+var age = 65
+
+if age < 18 {
+    print("You are a minor")
+} else if age < 60 {
+    print("You are an adult")
+} else {
+    print("You are a senior")
+}
+```
+
+</CodeGroup>
+
+### Switch Statements
+
+```swift
+let name = readLine(stdin)
+
+switch name {
+case "":
+    print("No name provided")
+case "Dave", "Frank":
+    print("Cool name!")
+default:
+    print("Hi, \(name)!")
+}
+```
+
+### Ternary Operator
+
+```swift
+var driverLicense = true
+
+driverLicense 
+    ? print("driver seat") 
+    : print("passenger seat")
+// Output: driver's seat
+```
+
+## Loops
+
+### For-In Loop
+
+<Tabs>
+  <Tab title="Basic">
+    ```swift
+    for char in "hehe" {
+        print(char)
+    }
+    // Output: h e h e
+    ```
+  </Tab>
+  <Tab title="Range">
+    ```swift
+    for i in countup(1, 10) {
+        print(i)
+    }
+    // Output: 1 2 3 4 5 6 7 8 9 10
+    ```
+  </Tab>
+  <Tab title="Stride">
+    ```swift
+    for oddNum in stride(from: 1, to: 5, by: 2) {
+        print(oddNum)
+    }
+    // Output: 1 3
+    ```
+  </Tab>
+</Tabs>
+
+### While Loop
+
+```swift
+var counter = 1
+var stopNum = Int.random(in: 1...10)
+
+while counter < stopNum {
+    print(counter)
+    counter += 1
+}
+```
+
+### Control Keywords
+
+<CodeGroup>
+
+```swift Continue
+for num in 0...5 {
+    if num % 2 == 0 {
+        continue
+    }
+    print(num)
+}
+// Output: 1 3 5
+```
+
+```swift Break
+for char in "supercalifragilistic" {
+    if char == "c" {
+        break
+    }
+    print(char)
+}
+// Output: s u p e r
+```
+
+</CodeGroup>
+
+## Functions
+
+### Basic Functions
+
+```swift
+func greet() {
+    print("Hey there!")
+}
+
+greet()  // Output: Hey there!
+```
+
+### Functions with Parameters
+
+<Tabs>
+  <Tab title="Basic">
+    ```swift
+    func birthday(name: String, age: Int) {
+        print("Happy birthday \(name)! You turn \(age) today!")
+    }
+    
+    birthday("Oscar", 26)
+    // Happy birthday Oscar! You turn 26 today!
+    ```
+  </Tab>
+  <Tab title="Default Parameters">
+    ```swift
+    func favoriteLanguage(name: String, language: String = "Kotlin") {
+        print("Hello, \(name). Your favorite is \(language)")
+    }
+    
+    favoriteLanguage("Manon")
+    // Hello, Manon. Your favorite is Kotlin
+    ```
+  </Tab>
+  <Tab title="Named Parameters">
+    ```swift
+    func findMyAge(currentYear: Int, birthYear: Int) {
+        var myAge = currentYear - birthYear
+        print("I am \(myAge) years old.")
+    }
+    
+    findMyAge(currentYear: 2020, birthYear: 1995)
+    // I am 25 years old.
+    ```
+  </Tab>
+</Tabs>
+
+### Return Values
+
+```swift
+func getArea(length: Int, width: Int) -> Int {
+    var area = length * width
+    return area
+}
+
+let myArea = getArea(10, 8)
+print("The area is \(myArea).")  // The area is 80.
+```
+
+## Arrays and Collections
+
+### Arrays
+
+```swift
+var programmingLanguages = ["C#", "Java", "Kotlin", "Ruby"]
+var fruits = ["Orange", "Apple", "Banana", "Mango"]
+
+print(fruits[2])  // Banana
+print(fruits.count)  // 4
+```
+
+### Sets
+
+```swift
+var primaryColors: Set = ["Red", "Blue", "Yellow"]
+var companies: Set = ["Facebook", "Apple", "Netflix", "Google"]
+
+print(companies.contains("Apple"))  // true
+```
+
+### Dictionaries
+
+```swift
+var averageTemp = [
+    "winter": 35,
+    "spring": 60,
+    "summer": 85,
+    "fall": 55
+]
+
+print(averageTemp["summer"])  // Optional(85)
+```
+
+## Key Features
+
+<Accordion title="Optionals">
+  Swift uses optionals to handle the absence of a value:
+  
+  ```swift
+  var name: String? = "John"
+  
+  // Optional binding
+  if let unwrappedName = name {
+      print(unwrappedName)
+  }
+  
+  // Nil coalescing
+  let displayName = name ?? "Guest"
+  ```
+</Accordion>
+
+<Accordion title="Computed Properties">
+  Variables with custom getters and setters:
+  
+  ```swift
+  var distanceInMeters: Float = 100
+  
+  var distanceInFeet: Float {
+      get {
+          distanceInMeters * 3.28
+      }
+      set(newDistance) {
+          distanceInMeters = newDistance / 3.28
+      }
+  }
+  ```
+</Accordion>
+
+<Tip>
+Swift is type-safe, which means the compiler helps you catch type-related errors at compile time.
+</Tip>

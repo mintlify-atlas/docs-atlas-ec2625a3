@@ -1,80 +1,237 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quick Start Guide
+description: Get up and running with Cheat Sheets in minutes
 ---
 
-## Get started in three steps
+## Welcome to Cheat Sheets
 
-Get your documentation site running locally and make your first customization.
-
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
-
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+This guide will help you get started with the Cheat Sheets app quickly. Whether you're a beginner learning a new programming language or an experienced developer looking for quick syntax references, this guide has you covered.
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  Already installed the app? Jump to [First Launch](#first-launch) to start exploring cheat sheets.
 </Note>
+
+## Installation Options
+
+Choose your preferred installation method based on your platform:
+
+<CardGroup cols={2}>
+  <Card title="Android" icon="android" href="/installation#android">
+    Install from Google Play or download the APK directly from GitHub Releases.
+  </Card>
+  <Card title="iOS" icon="apple" href="/installation#ios">
+    Install via AltStore (no jailbreak required) or download the IPA file.
+  </Card>
+</CardGroup>
+
+<Tip>
+  For detailed installation instructions and troubleshooting, see the [Installation Guide](/installation).
+</Tip>
+
+## First Launch
+
+When you first open the Cheat Sheets app, you'll see the main browse screen with all available cheat sheets organized by category.
+
+<Steps>
+  <Step title="Browse Cheat Sheets">
+    The home screen displays all available cheat sheets as colorful cards. Each card shows:
+    - **Language/Tool name** (e.g., Python, Git, Docker)
+    - **Category tag** (Programming, Toolkit, Other)
+    - **Brief description**
+    
+    Scroll through the list to explore what's available.
+  </Step>
+
+  <Step title="Select a Cheat Sheet">
+    Tap any cheat sheet card to open it. You'll see:
+    - **Introduction** with a brief overview
+    - **Sections** organized by topic
+    - **Code examples** with syntax highlighting
+    - **Copy buttons** to quickly copy code snippets
+  </Step>
+
+  <Step title="Navigate Sections">
+    Each cheat sheet is divided into logical sections. Use the section list to jump directly to the topic you need:
+    
+    - Getting Started
+    - Syntax & Data Types
+    - Control Flow
+    - Functions & Methods
+    - Advanced Topics
+    - Tips & Tricks
+  </Step>
+</Steps>
+
+## Using Search
+
+The search feature helps you find specific commands, syntax, or topics across all cheat sheets.
+
+<Steps>
+  <Step title="Open Search">
+    Tap the **search icon** in the top navigation bar to open the search screen.
+  </Step>
+
+  <Step title="Enter Query">
+    Type your search query. The app will search through:
+    - Cheat sheet titles
+    - Content within cheat sheets
+    - Code examples
+    - Section headings
+    
+    <Accordion title="Search Examples">
+      Try searching for:
+      - `"for loop"` - Find loop syntax across languages
+      - `"git commit"` - Find Git commit commands
+      - `"array"` - Find array operations in different languages
+      - `"async"` - Find async/await patterns
+    </Accordion>
+  </Step>
+
+  <Step title="View Results">
+    Search results show matching cheat sheets with highlighted text. Tap any result to open that cheat sheet at the relevant section.
+  </Step>
+</Steps>
+
+## Customizing the App
+
+Make the app your own by adjusting settings to match your preferences.
+
+### Theme Selection
+
+Choose between Light, Dark, or System theme:
+
+1. Tap the **settings icon** (gear) in the top navigation
+2. Select **Theme**
+3. Choose your preferred option:
+   - **Light** - Bright background, easier in daylight
+   - **Dark** - Dark background, easier on the eyes at night
+   - **System** - Follows your device's system theme
+
+<Tip>
+  Dark mode is perfect for late-night coding sessions and reduces eye strain.
+</Tip>
+
+### Other Settings
+
+<CardGroup cols={2}>
+  <Card title="Font Size" icon="text-size">
+    Adjust code font size for better readability
+  </Card>
+  <Card title="Categories" icon="filter">
+    Filter cheat sheets by category (Programming, Toolkit, Other)
+  </Card>
+</CardGroup>
+
+## Common Use Cases
+
+### Learning a New Language
+
+<Steps>
+  <Step title="Open Language Cheat Sheet">
+    Navigate to the language you want to learn (e.g., Python, Rust, JavaScript).
+  </Step>
+
+  <Step title="Start with Getting Started">
+    Read the Getting Started section for a Hello World example and basic syntax.
+  </Step>
+
+  <Step title="Practice with Examples">
+    Copy code examples and run them in your IDE or code editor. Modify them to understand how they work.
+  </Step>
+</Steps>
+
+### Quick Reference During Development
+
+When you need to look up syntax quickly:
+
+1. Open the app on your phone or tablet
+2. Search for the specific command or syntax
+3. Copy the code snippet
+4. Paste it into your development environment
+
+<Tip>
+  Keep the app open on a second screen or phone while coding for instant access to reference material.
+</Tip>
+
+### Interview Preparation
+
+Prepare for technical interviews by reviewing:
+
+- **Data Structures** - Arrays, lists, maps, sets
+- **Algorithms** - Sorting, searching, recursion
+- **Common Patterns** - Loops, conditionals, error handling
+- **Language-Specific** - Unique features of each language
+
+## Tips & Tricks
+
+<AccordionGroup>
+  <Accordion title="Use Favorites (Coming Soon)">
+    A favorites feature is planned for future releases, allowing you to bookmark frequently used cheat sheets.
+  </Accordion>
+
+  <Accordion title="Offline Access">
+    Offline support is coming soon. Once implemented, you'll be able to access cheat sheets without an internet connection.
+  </Accordion>
+
+  <Accordion title="Share Code Snippets">
+    Long-press any code block to copy it to your clipboard, then share it with your team via messaging apps or email.
+  </Accordion>
+
+  <Accordion title="Compare Languages Side-by-Side">
+    Open multiple cheat sheets to compare syntax between languages. For example, compare Python list comprehensions with JavaScript array methods.
+  </Accordion>
+</AccordionGroup>
+
+## Available Cheat Sheets
+
+Explore these programming languages and tools:
+
+### Programming Languages
+
+<CardGroup cols={3}>
+  <Card title="Python" icon="python" href="/languages/python" />
+  <Card title="Rust" icon="rust" href="/languages/rust" />
+  <Card title="Swift" icon="apple" href="/languages/swift" />
+  <Card title="JavaScript" icon="js" href="/languages/javascript" />
+  <Card title="Kotlin" icon="k" href="/languages/kotlin" />
+  <Card title="Go" icon="golang" href="/languages/go" />
+  <Card title="Dart" icon="d" href="/languages/dart" />
+  <Card title="Java" icon="java" href="/languages/java" />
+  <Card title="C++" icon="c" href="/languages/cpp" />
+</CardGroup>
+
+### Developer Tools
+
+<CardGroup cols={3}>
+  <Card title="Git" icon="git" href="/tools/git" />
+  <Card title="GitHub CLI" icon="github" href="/tools/github-cli" />
+  <Card title="Docker" icon="docker" href="/tools/docker" />
+  <Card title="Vim" icon="terminal" href="/tools/vim" />
+</CardGroup>
+
+## Next Steps
+
+Now that you're familiar with the basics, explore more:
+
+<CardGroup cols={2}>
+  <Card title="Build from Source" icon="code" href="/building/setup">
+    Set up a development environment to build the app locally
+  </Card>
+  <Card title="Contribute" icon="code-pull-request" href="/contributing">
+    Help improve Cheat Sheets by adding new content or features
+  </Card>
+  <Card title="Report Issues" icon="bug" href="https://github.com/ivansaul/cheat-sheets/issues">
+    Found a bug? Let us know on GitHub
+  </Card>
+  <Card title="Join Community" icon="discord" href="https://discord.gg/tDvybtJ7y9">
+    Connect with other developers on Discord
+  </Card>
+</CardGroup>
+
+## Need Help?
+
+<Card title="Visit the Introduction" icon="book-open" href="/introduction">
+  Learn more about what Cheat Sheets offers and how it works
+</Card>
+
+Have a question? Join our [Discord community](https://discord.gg/tDvybtJ7y9) or open an issue on [GitHub](https://github.com/ivansaul/cheat-sheets/issues).

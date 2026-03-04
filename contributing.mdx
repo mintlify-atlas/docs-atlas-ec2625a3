@@ -1,0 +1,519 @@
+---
+title: Contributing
+description: Learn how to contribute to Cheat Sheets and help make it better for everyone
+---
+
+## Welcome Contributors!
+
+Thank you for your interest in contributing to Cheat Sheets! This guide will help you get started with contributing to the project.
+
+<Note>
+  This project is based on [Fechin/reference](https://github.com/Fechin/reference). The main focus is adding new features and making developer references accessible to everyone.
+</Note>
+
+## Getting Started
+
+Before contributing, make sure you:
+
+<Steps>
+  <Step title="Read the Documentation">
+    Familiarize yourself with:
+    - [Development Setup](/building/setup) - Set up your local environment
+    - [Architecture](/building/architecture) - Understand the codebase structure
+  </Step>
+
+  <Step title="Join the Community">
+    Connect with other contributors on [Discord](https://discord.gg/tDvybtJ7y9)
+    
+    <a href="https://discord.gg/tDvybtJ7y9">
+      <img alt="Discord Server" height="50" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg" />
+    </a>
+  </Step>
+
+  <Step title="Check Existing Issues">
+    Browse [open issues](https://github.com/ivansaul/cheat-sheets/issues) to find tasks to work on or report new bugs/features.
+  </Step>
+</Steps>
+
+## Ways to Contribute
+
+<CardGroup cols={2}>
+  <Card title="Report Bugs" icon="bug">
+    Found a bug? Open an issue with details about the problem
+  </Card>
+  <Card title="Suggest Features" icon="lightbulb">
+    Have an idea? Share it in an issue or discussion
+  </Card>
+  <Card title="Add Cheat Sheets" icon="file-code">
+    Contribute new programming language or tool references
+  </Card>
+  <Card title="Improve Code" icon="code">
+    Fix bugs, refactor code, or improve performance
+  </Card>
+  <Card title="Write Documentation" icon="book">
+    Help improve docs, guides, or code comments
+  </Card>
+  <Card title="Review PRs" icon="code-pull-request">
+    Help review and test pull requests from others
+  </Card>
+</CardGroup>
+
+## Development Workflow
+
+<Steps>
+  <Step title="Fork the Repository">
+    Create your own fork of the repository:
+    
+    ```bash
+    # Click "Fork" on GitHub, then clone your fork
+    git clone https://github.com/YOUR_USERNAME/cheat-sheets.git
+    cd cheat-sheets
+    ```
+  </Step>
+
+  <Step title="Create a Branch">
+    Create a new branch for your changes:
+    
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+    
+    Use prefixes:
+    - `feature/` - New features
+    - `fix/` - Bug fixes
+    - `docs/` - Documentation changes
+    - `refactor/` - Code refactoring
+    - `chore/` - Maintenance tasks
+  </Step>
+
+  <Step title="Set Up Development Environment">
+    Install dependencies and start development:
+    
+    ```bash
+    flutter pub get
+    dart run build_runner watch -d
+    ```
+    
+    See the [Setup Guide](/building/setup) for full instructions.
+  </Step>
+
+  <Step title="Make Your Changes">
+    - Write clean, readable code
+    - Follow the code style guidelines (see below)
+    - Add tests if applicable
+    - Update documentation if needed
+  </Step>
+
+  <Step title="Test Your Changes">
+    Ensure everything works:
+    
+    ```bash
+    # Run the app
+    flutter run
+    
+    # Run tests (if available)
+    flutter test
+    
+    # Check for lint issues
+    flutter analyze
+    ```
+  </Step>
+
+  <Step title="Commit Your Changes">
+    Write clear, descriptive commit messages:
+    
+    ```bash
+    git add .
+    git commit -m "feat: add Python async/await cheat sheet"
+    ```
+    
+    <Tip>
+      Use conventional commit format:
+      - `feat:` - New feature
+      - `fix:` - Bug fix
+      - `docs:` - Documentation
+      - `style:` - Formatting
+      - `refactor:` - Code restructuring
+      - `test:` - Tests
+      - `chore:` - Maintenance
+    </Tip>
+  </Step>
+
+  <Step title="Push and Create PR">
+    Push your branch and open a pull request:
+    
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+    
+    Then open a PR on GitHub with:
+    - Clear title describing the change
+    - Description of what and why
+    - Link to related issues
+    - Screenshots (for UI changes)
+  </Step>
+</Steps>
+
+## Code Style Guidelines
+
+### Dart/Flutter Code
+
+<Accordion title="Follow Effective Dart">
+  The project follows [Effective Dart](https://dart.dev/guides/language/effective-dart) guidelines:
+  
+  - Use `lowerCamelCase` for variables, methods, and parameters
+  - Use `UpperCamelCase` for types and classes
+  - Use `lowercase_with_underscores` for library and file names
+  - Prefer `final` over `var` where possible
+  - Use trailing commas for better formatting
+</Accordion>
+
+<Accordion title="Code Organization">
+  - Keep files focused and single-purpose
+  - Use feature-first organization
+  - Place shared code in `lib/src/shared/`
+  - Group related functionality together
+  
+  Example:
+  ```dart
+  // Good: Organized by feature
+  lib/src/features/cheatsheets/
+    ├── data/
+    ├── domain/
+    └── presentation/
+  
+  // Avoid: Organizing by type globally
+  lib/
+    ├── models/
+    ├── screens/
+    └── widgets/
+  ```
+</Accordion>
+
+<Accordion title="State Management">
+  - Use Riverpod for all state management
+  - Prefer code generation (`@riverpod`) over manual providers
+  - Keep business logic in providers, not widgets
+  - Use `ConsumerWidget` or `HookConsumerWidget` for widgets that read state
+  
+  ```dart
+  // Good: Using code generation
+  @riverpod
+  class CheatsheetList extends _$CheatsheetList {
+    @override
+    Future<List<CheatsheetMeta>> build() async {
+      // Logic here
+    }
+  }
+  
+  // Avoid: Manual provider creation
+  final cheatsheetListProvider = FutureProvider<List<CheatsheetMeta>>((ref) async {
+    // Logic here
+  });
+  ```
+</Accordion>
+
+<Accordion title="Error Handling">
+  - Use `fpdart`'s `Either` type for error handling
+  - Return `Either<Exception, Data>` from repositories
+  - Map exceptions to app-specific types
+  - Handle all error cases in UI
+  
+  ```dart
+  TaskEither<AppException, List<CheatsheetMeta>> list() {
+    return _dataSource.list()
+      .mapLeft((error) => error.toAppException());
+  }
+  ```
+</Accordion>
+
+<Accordion title="Code Generation">
+  Always run code generation after changes:
+  
+  ```bash
+  # After modifying:
+  # - Providers (@riverpod)
+  # - Routes (@TypedGoRoute)
+  # - Models (@freezed)
+  # - Environment variables (.env)
+  
+  dart run build_runner build --delete-conflicting-outputs
+  ```
+</Accordion>
+
+### Code Comments
+
+<CodeGroup>
+```dart Good Comments
+/// Fetches all available cheat sheets from the API.
+///
+/// Returns a list of [CheatsheetMeta] objects containing
+/// basic information about each cheat sheet.
+///
+/// Throws [CheatsheetException] if the request fails.
+TaskEither<AppException, List<CheatsheetMeta>> list();
+```
+
+```dart Avoid
+// Get cheatsheets
+list();
+```
+</CodeGroup>
+
+- Use `///` for public API documentation
+- Use `//` for implementation comments
+- Explain **why**, not just **what**
+- Keep comments up-to-date with code
+
+## Adding New Cheat Sheets
+
+To add a new programming language or tool reference:
+
+<Steps>
+  <Step title="Prepare Content">
+    Create a markdown file with your cheat sheet content:
+    
+    - Use clear headings and sections
+    - Include code examples with syntax highlighting
+    - Add explanations for complex concepts
+    - Reference official documentation
+  </Step>
+
+  <Step title="Update Data Source">
+    Add your cheat sheet to the data source:
+    
+    - For local assets: Add to `docs/data/`
+    - For remote: Update the backend API (separate repository)
+  </Step>
+
+  <Step title="Test Rendering">
+    Ensure your cheat sheet renders correctly:
+    
+    - Check markdown formatting
+    - Verify code highlighting
+    - Test on different screen sizes
+    - Confirm light/dark theme support
+  </Step>
+
+  <Step title="Submit PR">
+    Create a pull request with:
+    
+    - Clear description of the new cheat sheet
+    - Preview screenshots
+    - Why this reference is valuable
+  </Step>
+</Steps>
+
+<Note>
+  Cheat sheets should be concise, practical references - not comprehensive tutorials. Focus on common patterns, syntax, and quick lookups.
+</Note>
+
+## Reporting Issues
+
+When reporting bugs or suggesting features:
+
+<Accordion title="Bug Reports">
+  Include:
+  
+  - **Description**: What happened vs. what you expected
+  - **Steps to reproduce**: Detailed steps to recreate the issue
+  - **Environment**:
+    - App version
+    - Device/OS (Android/iOS version)
+    - Flutter version
+  - **Screenshots**: If applicable
+  - **Logs**: Error messages or stack traces
+  
+  Example:
+  ```markdown
+  ## Bug Description
+  App crashes when opening the Python cheat sheet
+  
+  ## Steps to Reproduce
+  1. Launch the app
+  2. Tap on "Python" in the list
+  3. App crashes
+  
+  ## Environment
+  - App Version: 0.4.0
+  - Device: Pixel 6, Android 14
+  - Flutter: 3.1.2
+  
+  ## Logs
+  [Paste error logs here]
+  ```
+</Accordion>
+
+<Accordion title="Feature Requests">
+  Include:
+  
+  - **Use case**: Why is this feature needed?
+  - **Proposed solution**: How should it work?
+  - **Alternatives**: Other ways to solve the problem
+  - **Mockups**: Visual examples (optional)
+  
+  Example:
+  ```markdown
+  ## Feature Request: Bookmark Cheat Sheets
+  
+  **Use Case**
+  As a user, I want to bookmark frequently used cheat sheets for quick access.
+  
+  **Proposed Solution**
+  Add a star icon to each cheat sheet that saves it to a "Favorites" section.
+  
+  **Alternatives**
+  - Recent history (but this doesn't persist favorites)
+  - Search (but requires remembering names)
+  ```
+</Accordion>
+
+## Pull Request Guidelines
+
+### Before Submitting
+
+<Steps>
+  <Step title="Code Quality">
+    - Code follows style guidelines
+    - No linting errors (`flutter analyze`)
+    - Code is well-commented
+    - Removed debug code and console logs
+  </Step>
+
+  <Step title="Testing">
+    - Manually tested all changes
+    - App builds without errors
+    - No regressions in existing features
+  </Step>
+
+  <Step title="Documentation">
+    - Updated relevant documentation
+    - Added code comments for complex logic
+    - Updated CHANGELOG if applicable
+  </Step>
+</Steps>
+
+### PR Template
+
+```markdown
+## Description
+[Brief description of changes]
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Related Issues
+Closes #[issue number]
+
+## Changes Made
+- [List key changes]
+- [Be specific]
+
+## Screenshots
+[If UI changes, include before/after]
+
+## Testing
+- [ ] Tested on Android
+- [ ] Tested on iOS
+- [ ] No lint errors
+- [ ] App builds successfully
+
+## Checklist
+- [ ] Code follows style guidelines
+- [ ] Self-reviewed code
+- [ ] Commented complex code
+- [ ] Updated documentation
+- [ ] No breaking changes (or documented)
+```
+
+## Review Process
+
+<Steps>
+  <Step title="Automated Checks">
+    GitHub Actions runs automated checks:
+    - Code analysis
+    - Build verification
+    - Tests (if configured)
+  </Step>
+
+  <Step title="Maintainer Review">
+    A maintainer will review your PR:
+    - Code quality
+    - Architecture fit
+    - Feature appropriateness
+  </Step>
+
+  <Step title="Feedback & Changes">
+    - Address review comments
+    - Push updates to your branch
+    - Request re-review when ready
+  </Step>
+
+  <Step title="Merge">
+    Once approved, a maintainer will merge your PR.
+    
+    Thank you for your contribution!
+  </Step>
+</Steps>
+
+<Tip>
+  Be patient and responsive during reviews. Maintainers may ask questions or request changes to ensure quality and consistency.
+</Tip>
+
+## Code of Conduct
+
+We expect all contributors to:
+
+- Be respectful and inclusive
+- Welcome newcomers
+- Accept constructive criticism gracefully
+- Focus on what's best for the community
+- Show empathy towards others
+
+<Warning>
+  Harassment, trolling, or abusive behavior will not be tolerated. Violations may result in being blocked from contributing.
+</Warning>
+
+## License
+
+By contributing to Cheat Sheets, you agree that your contributions will be licensed under the [GPLv3 License](https://opensource.org/licenses/GPL-3.0).
+
+## Project Roadmap
+
+Upcoming features we're working on:
+
+- [ ] Offline support
+- [ ] Localization (i18n)
+- [ ] Favorites, history & progress tracking
+
+<Note>
+  Want to work on one of these? Check the [issues](https://github.com/ivansaul/cheat-sheets/issues) or start a discussion!
+</Note>
+
+## Get Help
+
+Need assistance?
+
+<CardGroup cols={2}>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/tDvybtJ7y9">
+    Chat with maintainers and contributors
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/ivansaul/cheat-sheets/issues">
+    Report bugs or ask questions
+  </Card>
+  <Card title="Development Guide" icon="book" href="/building/setup">
+    Setup and architecture documentation
+  </Card>
+  <Card title="Contact Maintainer" icon="envelope" href="https://discord.com/users/744755977684779038">
+    Reach out directly on Discord
+  </Card>
+</CardGroup>
+
+## Thank You!
+
+Your contributions make Cheat Sheets better for developers worldwide. Whether you're fixing a typo or adding a major feature, every contribution matters.
+
+Happy coding!

@@ -1,0 +1,279 @@
+---
+title: Development Setup
+description: Learn how to set up your development environment to build and run Cheat Sheets locally
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following tools installed on your system:
+
+<Steps>
+  <Step title="Install Flutter SDK">
+    Download and install Flutter from the [official website](https://flutter.dev/docs/get-started/install).
+    
+    The app requires **Flutter SDK 3.1.2** or higher with **Dart SDK 3.1.2 to 4.0.0**.
+    
+    Verify your installation:
+    ```bash
+    flutter --version
+    flutter doctor
+    ```
+  </Step>
+
+  <Step title="Install Development Tools">
+    For full local development with the backend API, you'll also need:
+    
+    - [Rust](https://www.rust-lang.org/tools/install) - For running the worker/backend
+    - [npm](https://docs.npmjs.com/getting-started/installing-node) - For Cloudflare Wrangler CLI
+    
+    <Note>
+      These tools are only required if you want to run the complete development stack including the backend API. You can build and run the app without them.
+    </Note>
+  </Step>
+
+  <Step title="Set up an IDE">
+    Install one of the following:
+    - [Visual Studio Code](https://code.visualstudio.com/) with Flutter and Dart extensions
+    - [Android Studio](https://developer.android.com/studio) with Flutter plugin
+    - [IntelliJ IDEA](https://www.jetbrains.com/idea/) with Flutter plugin
+  </Step>
+</Steps>
+
+## Quick Start
+
+Get the app running locally in just a few commands:
+
+<Steps>
+  <Step title="Clone the Repository">
+    ```bash
+    git clone https://github.com/ivansaul/cheat-sheets.git
+    cd cheat-sheets
+    ```
+  </Step>
+
+  <Step title="Install Dependencies">
+    ```bash
+    flutter pub get
+    ```
+    
+    This downloads all required Dart packages defined in `pubspec.yaml`.
+  </Step>
+
+  <Step title="Generate Code">
+    The app uses code generation for routing, serialization, and state management:
+    
+    ```bash
+    dart run build_runner build
+    ```
+    
+    <Tip>
+      Use `dart run build_runner watch -d` during development to automatically regenerate code when files change.
+    </Tip>
+  </Step>
+
+  <Step title="Run the App">
+    ```bash
+    flutter run --release
+    ```
+    
+    For development mode with hot reload:
+    ```bash
+    flutter run
+    ```
+  </Step>
+</Steps>
+
+## Full Development Setup
+
+For complete local development with the backend API:
+
+<Steps>
+  <Step title="Set up the Backend">
+    Clone and configure the worker repository:
+    
+    ```bash
+    git clone https://github.com/ivansaul/devstack-worker.git
+    ```
+  </Step>
+
+  <Step title="Create the Database">
+    Run the seed script to initialize the database:
+    
+    ```bash
+    cargo run -p cheatsheets
+    ```
+    
+    Then set up the local D1 database:
+    ```bash
+    npx wrangler d1 execute CHEATSHEETS --local --file=./schema.sql
+    ```
+  </Step>
+
+  <Step title="Start the Development Server">
+    ```bash
+    npx wrangler dev --ip 0.0.0.0 --port 8787
+    ```
+    
+    The API will be available at `http://localhost:8787/api`
+  </Step>
+
+  <Step title="Configure Environment Variables">
+    Create `.env` and `.env_debug` files in the app root:
+    
+    ```bash
+    # For local development
+    API_CHEATSHEET_BASE_URL=http://localhost:8787/api
+    API_CHEATSHEET_LIST_ENDPOINT=/cheatsheets
+    API_CHEATSHEET_DETAIL_ENDPOINT=/cheatsheets/:id
+    API_COUPON_BASE_URL=https://cdn.real.discount/api
+    API_COUPON_LIST_ENDPOINT=/courses
+    API_COUPON_ENDPOINT=/courses/slug/:slug
+    ```
+    
+    <Warning>
+      For Android emulator, you may need to use your computer's IP address instead of `localhost`. For example: `http://192.168.1.100:8787/api`
+    </Warning>
+  </Step>
+
+  <Step title="Run with Environment">
+    ```bash
+    flutter pub get
+    dart run build_runner watch -d
+    flutter run
+    ```
+  </Step>
+</Steps>
+
+## Build Commands
+
+<CodeGroup>
+```bash Development
+# Run in debug mode with hot reload
+flutter run
+
+# Run on specific device
+flutter run -d <device-id>
+
+# List available devices
+flutter devices
+```
+
+```bash Production
+# Build release version
+flutter run --release
+
+# Build APK (Android)
+flutter build apk --release
+
+# Build App Bundle (Android)
+flutter build appbundle --release
+
+# Build IPA (iOS)
+flutter build ipa --release
+```
+
+```bash Code Generation
+# One-time build
+dart run build_runner build
+
+# Watch mode (auto-regenerate)
+dart run build_runner watch -d
+
+# Clean and rebuild
+dart run build_runner build --delete-conflicting-outputs
+```
+</CodeGroup>
+
+## Platform-Specific Setup
+
+<Accordion title="Android Setup">
+  1. Install [Android Studio](https://developer.android.com/studio)
+  2. Install Android SDK and platform tools
+  3. Accept Android licenses:
+     ```bash
+     flutter doctor --android-licenses
+     ```
+  4. Set up an emulator or connect a physical device
+  5. Enable USB debugging on your device
+</Accordion>
+
+<Accordion title="iOS Setup">
+  1. Requires macOS with Xcode installed
+  2. Install Xcode from the App Store
+  3. Install Xcode command line tools:
+     ```bash
+     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+     sudo xcodebuild -runFirstLaunch
+     ```
+  4. Set up iOS Simulator or connect a physical device
+  5. Install CocoaPods:
+     ```bash
+     sudo gem install cocoapods
+     ```
+</Accordion>
+
+## Troubleshooting
+
+<Accordion title="Build Runner Conflicts">
+  If you encounter conflicts during code generation:
+  
+  ```bash
+  dart run build_runner clean
+  dart run build_runner build --delete-conflicting-outputs
+  ```
+</Accordion>
+
+<Accordion title="Dependency Issues">
+  Clean and reinstall dependencies:
+  
+  ```bash
+  flutter clean
+  flutter pub get
+  dart run build_runner build
+  ```
+</Accordion>
+
+<Accordion title="Environment Variables Not Loading">
+  Ensure you've run the code generator after creating `.env` files:
+  
+  ```bash
+  dart run build_runner build
+  ```
+  
+  The app uses `envied` package which generates code from `.env` files.
+</Accordion>
+
+<Accordion title="API Connection Issues">
+  For Android emulator:
+  - Use `10.0.2.2` instead of `localhost` to access host machine
+  - Or use your computer's local IP address
+  
+  For iOS simulator:
+  - `localhost` should work fine
+  
+  Check if the backend is running:
+  ```bash
+  curl http://localhost:8787/api/cheatsheets
+  ```
+</Accordion>
+
+<Accordion title="Flutter Doctor Issues">
+  Run diagnostics to identify problems:
+  
+  ```bash
+  flutter doctor -v
+  ```
+  
+  This will show detailed information about missing dependencies or configuration issues.
+</Accordion>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Architecture" icon="sitemap" href="/building/architecture">
+    Learn about the app's structure and design patterns
+  </Card>
+  <Card title="Contributing" icon="code-pull-request" href="/contributing">
+    Start contributing to the project
+  </Card>
+</CardGroup>

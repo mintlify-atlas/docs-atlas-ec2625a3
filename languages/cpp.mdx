@@ -1,0 +1,487 @@
+---
+title: C++ Cheat Sheet
+description: Quick reference for C++ programming covering syntax, data types, pointers, classes, STL containers, and memory management.
+---
+
+## Overview
+
+C++ is a powerful general-purpose programming language that supports procedural, object-oriented, and generic programming. This cheat sheet covers essential C++ concepts from the mobile app.
+
+## Getting Started
+
+### Hello World
+
+```cpp
+#include <iostream>
+
+int main() {
+    std::cout << "Hello CheatSheets\n";
+    return 0;
+}
+```
+
+**Compiling and Running:**
+
+```bash
+$ g++ hello.cpp -o hello
+$ ./hello
+Hello CheatSheets
+```
+
+### Variables
+
+<CodeGroup>
+
+```cpp Basic Types
+int number = 5;       // Integer
+float f = 0.95;       // Floating number
+double PI = 3.14159;  // Double precision
+char yes = 'Y';       // Character
+std::string s = "ME"; // String
+bool isRight = true;  // Boolean
+
+const float RATE = 0.8;  // Constant
+```
+
+```cpp C++11 Initialization
+int age {25};
+std::cout << age;  // 25
+```
+
+</CodeGroup>
+
+## Primitive Data Types
+
+| Type | Size | Range |
+|------|------|-------|
+| `int` | 4 bytes | -2³¹ to 2³¹-1 |
+| `float` | 4 bytes | N/A |
+| `double` | 8 bytes | N/A |
+| `char` | 1 byte | -128 to 127 |
+| `bool` | 1 byte | true/false |
+| `void` | N/A | N/A |
+| `wchar_t` | 2-4 bytes | 1 wide character |
+
+## Input/Output
+
+### User Input
+
+```cpp
+int num;
+
+std::cout << "Type a number: ";
+std::cin >> num;
+
+std::cout << "You entered " << num;
+```
+
+### Swap Values
+
+```cpp
+int a = 5, b = 10;
+std::swap(a, b);
+
+// Output: a=10, b=5
+std::cout << "a=" << a << ", b=" << b;
+```
+
+### Comments
+
+```cpp
+// Single line comment
+
+/* Multi-line
+   comment */
+```
+
+## Arrays
+
+### Declaration and Usage
+
+```cpp
+std::array<int, 3> marks;
+marks[0] = 92;
+marks[1] = 97;
+marks[2] = 98;
+
+// Initialize on declaration
+std::array<int, 3> scores = {92, 97, 98};
+
+// With empty members
+std::array<int, 3> nums = {92, 97};
+std::cout << nums[2];  // 0
+```
+
+Visualization:
+```
+┌─────┬─────┬─────┬─────┬─────┬─────┐
+│ 92  │ 97  │ 98  │ 99  │ 98  │ 94  │
+└─────┴─────┴─────┴─────┴─────┴─────┘
+   0     1     2     3     4     5
+```
+
+### Iteration
+
+<Tabs>
+  <Tab title="Range-based">
+    ```cpp
+    char ref[5] = {'R', 'e', 'f'};
+    
+    for (const int &n : ref) {
+        std::cout << std::string(1, n);
+    }
+    ```
+  </Tab>
+  <Tab title="Traditional">
+    ```cpp
+    for (int i = 0; i < sizeof(ref); ++i) {
+        std::cout << ref[i];
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Control Flow
+
+### If Statement
+
+```cpp
+if (a == 10) {
+    // do something
+}
+```
+
+### If-Else
+
+```cpp
+int number = 16;
+
+if (number % 2 == 0) {
+    std::cout << "even";
+} else {
+    std::cout << "odd";
+}
+// Output: even
+```
+
+### Else-If
+
+```cpp
+int score = 99;
+
+if (score == 100) {
+    std::cout << "Superb";
+} else if (score >= 90) {
+    std::cout << "Excellent";
+} else if (score >= 80) {
+    std::cout << "Very Good";
+} else if (score >= 70) {
+    std::cout << "Good";
+} else if (score >= 60) {
+    std::cout << "OK";
+} else {
+    std::cout << "What?";
+}
+```
+
+## Operators
+
+### Comparison
+
+| Operator | Meaning |
+|----------|----------|
+| `a == b` | Equal to |
+| `a != b` | Not equal to |
+| `a < b` | Less than |
+| `a > b` | Greater than |
+| `a <= b` | Less than or equal to |
+| `a >= b` | Greater than or equal to |
+
+### Assignment
+
+| Example | Equivalent |
+|---------|------------|
+| `a += b` | a = a + b |
+| `a -= b` | a = a - b |
+| `a *= b` | a = a * b |
+| `a /= b` | a = a / b |
+| `a %= b` | a = a % b |
+
+### Logical
+
+| Example | Meaning |
+|---------|----------|
+| `exp1 && exp2` | Both are true (AND) |
+| `exp1 \|\| exp2` | Either is true (OR) |
+| `!exp` | exp is false (NOT) |
+
+## Loops
+
+### For Loop
+
+```cpp
+for (int i = 0; i < 6; i++) {
+    std::cout << i;
+}
+// Output: 012345
+```
+
+### While Loop
+
+```cpp
+int i = 0;
+while (i < 6) {
+    std::cout << i++;
+}
+// Output: 012345
+```
+
+### Do-While Loop
+
+```cpp
+int i = 1;
+do {
+    std::cout << i++;
+} while (i <= 5);
+// Output: 12345
+```
+
+### Range-based Loop (C++11)
+
+```cpp
+for (int n : {1, 2, 3, 4, 5}) {
+    std::cout << n << " ";
+}
+// Output: 1 2 3 4 5
+
+std::string hello = "CheatSheets.zip";
+for (char c : hello) {
+    std::cout << c << " ";
+}
+```
+
+### Loop Control
+
+<CodeGroup>
+
+```cpp Continue
+for (int i = 0; i < 10; i++) {
+    if (i % 2 == 0) {
+        continue;
+    }
+    std::cout << i;
+}
+// Output: 13579
+```
+
+```cpp Break
+int password, times = 0;
+while (password != 1234) {
+    if (times++ >= 3) {
+        std::cout << "Locked!\n";
+        break;
+    }
+    std::cout << "Password: ";
+    std::cin >> password;
+}
+```
+
+</CodeGroup>
+
+## Functions
+
+### Basic Functions
+
+```cpp
+#include <iostream>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    std::cout << add(10, 20);  // 30
+}
+```
+
+### Overloading
+
+```cpp
+void fun(std::string a, std::string b) {
+    std::cout << a + " " + b;
+}
+
+void fun(std::string a) {
+    std::cout << a;
+}
+
+void fun(int a) {
+    std::cout << a;
+}
+```
+
+## Pointers and References
+
+### Pointers
+
+```cpp
+int a = 200;
+int *ptr = &a;
+
+std::cout << *ptr;  // 200
+std::cout << ptr;   // 0x7ffd1c5c7aac (address)
+```
+
+### References
+
+```cpp
+int i = 1;
+int &ri = i;  // ri is a reference to i
+
+ri = 2;  // i is now 2
+std::cout << i;  // 2
+```
+
+## Classes and Objects
+
+### Defining a Class
+
+```cpp
+class MyClass {
+public:
+    int myNum;
+    std::string myString;
+};
+```
+
+### Creating Objects
+
+```cpp
+MyClass myObj;
+
+myObj.myNum = 15;
+myObj.myString = "Hello";
+
+std::cout << myObj.myNum << std::endl;     // 15
+std::cout << myObj.myString << std::endl;  // Hello
+```
+
+### Constructors
+
+```cpp
+class MyClass {
+public:
+    int myNum;
+    std::string myString;
+    
+    MyClass() {  // Constructor
+        myNum = 0;
+        myString = "";
+    }
+};
+
+MyClass myObj;
+std::cout << myObj.myNum;     // 0
+std::cout << myObj.myString;  // (empty)
+```
+
+### Destructors
+
+```cpp
+class MyClass {
+public:
+    ~MyClass() {  // Destructor
+        std::cout << "Object destroyed." << std::endl;
+    }
+};
+```
+
+### Access Modifiers
+
+```cpp
+class MyClass {
+public:     // Public members
+    int x;
+private:    // Private members
+    int y;
+protected:  // Protected members
+    int z;
+};
+```
+
+## STL Containers
+
+### Vectors
+
+```cpp
+#include <vector>
+
+std::vector<int> nums = {1, 2, 3};
+nums.push_back(4);
+
+for (int num : nums) {
+    std::cout << num << " ";
+}
+// Output: 1 2 3 4
+```
+
+### Maps
+
+```cpp
+#include <map>
+
+std::map<std::string, int> ages;
+ages["John"] = 30;
+ages["Jane"] = 25;
+
+std::cout << ages["John"];  // 30
+```
+
+## Key Features
+
+<Accordion title="Memory Management">
+  Manual memory allocation and deallocation:
+  
+  ```cpp
+  // Dynamic allocation
+  int* ptr = new int(5);
+  std::cout << *ptr;  // 5
+  
+  // Deallocation
+  delete ptr;
+  
+  // Array allocation
+  int* arr = new int[5];
+  delete[] arr;
+  ```
+</Accordion>
+
+<Accordion title="Namespaces">
+  Organize code and avoid naming conflicts:
+  
+  ```cpp
+  namespace MyNamespace {
+      int value = 42;
+  }
+  
+  std::cout << MyNamespace::value;  // 42
+  ```
+</Accordion>
+
+<Accordion title="Templates">
+  Generic programming with templates:
+  
+  ```cpp
+  template <typename T>
+  T getMax(T a, T b) {
+      return (a > b) ? a : b;
+  }
+  
+  std::cout << getMax(10, 20);     // 20
+  std::cout << getMax(5.5, 3.2);   // 5.5
+  ```
+</Accordion>
+
+<Tip>
+C++ provides low-level memory control while supporting high-level abstractions through OOP and templates.
+</Tip>

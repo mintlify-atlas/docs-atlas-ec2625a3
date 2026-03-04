@@ -1,0 +1,312 @@
+---
+title: GitHub CLI Cheat Sheet
+description: Quick reference for GitHub CLI commands and workflows
+---
+
+This page documents the GitHub CLI (gh) commands available in the Cheat Sheets mobile app. GitHub CLI is an open-source command line tool that brings GitHub to your terminal.
+
+## Installation
+
+### Windows
+
+| Tool   | Install                          | Upgrade                          |
+|--------|----------------------------------|----------------------------------|
+| WinGet | `winget install --id Github.cli` | `winget upgrade --id GitHub.cli` |
+| Scoop  | `scoop install gh`               | `scoop update gh`                |
+| Choco  | `choco install gh`               | `choco upgrade gh`               |
+
+### macOS
+
+| Tool     | Install                | Upgrade                                        |
+|----------|------------------------|------------------------------------------------|
+| Brew     | `brew install gh`      | `brew upgrade gh`                              |
+| MacPorts | `sudo port install gh` | `sudo port selfupdate && sudo port upgrade gh` |
+
+### Linux
+
+<Tip>
+See the [official install instructions](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) for your specific Linux distribution.
+</Tip>
+
+<Accordion title="Installation Script">
+```bash
+type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+&& sudo apt update \
+&& sudo apt install gh -y
+```
+</Accordion>
+
+## Basic Usage
+
+### Help and Documentation
+
+<CodeGroup>
+```bash Get help for any command
+gh help [command]
+```
+
+```bash List all commands
+gh --help
+```
+
+```bash Check version
+gh --version
+```
+</CodeGroup>
+
+<Note>
+Use `gh help [command]` to get detailed information about any GitHub CLI command.
+</Note>
+
+### Authentication
+
+<Steps>
+  <Step title="Login to GitHub">
+    ```bash
+    gh auth login
+    ```
+    Follow the interactive prompts to authenticate.
+  </Step>
+  
+  <Step title="Check authentication status">
+    ```bash
+    gh auth status
+    ```
+  </Step>
+  
+  <Step title="Logout">
+    ```bash
+    gh auth logout
+    ```
+  </Step>
+</Steps>
+
+### Repository Operations
+
+<Accordion title="Create Repository">
+```bash Create a new repository
+gh repo create [name]
+```
+
+<Tip>
+Use the interactive mode by running `gh repo create` without arguments.
+</Tip>
+</Accordion>
+
+<Accordion title="Clone Repository">
+```bash
+gh repo clone [repository]
+```
+</Accordion>
+
+<Accordion title="View Repository">
+```bash Open in browser
+gh repo view --web
+```
+
+```bash View in terminal
+gh repo view
+```
+</Accordion>
+
+<Accordion title="Fork Repository">
+```bash
+gh repo fork [repository]
+```
+</Accordion>
+
+### Pull Requests
+
+<Accordion title="Create Pull Request">
+```bash
+gh pr create
+```
+
+Follow the interactive prompts, or use flags:
+
+```bash
+gh pr create --title "Title" --body "Description"
+```
+</Accordion>
+
+<Accordion title="List Pull Requests">
+```bash
+gh pr list
+```
+
+Filter by state:
+```bash
+gh pr list --state open
+gh pr list --state closed
+```
+</Accordion>
+
+<Accordion title="View Pull Request">
+```bash View in browser
+gh pr view [number] --web
+```
+
+```bash View in terminal
+gh pr view [number]
+```
+</Accordion>
+
+<Accordion title="Checkout Pull Request">
+```bash
+gh pr checkout [number]
+```
+
+<Tip>
+This creates a local branch and switches to it.
+</Tip>
+</Accordion>
+
+<Accordion title="Merge Pull Request">
+```bash
+gh pr merge [number]
+```
+
+Specify merge method:
+```bash
+gh pr merge [number] --merge
+gh pr merge [number] --squash
+gh pr merge [number] --rebase
+```
+</Accordion>
+
+### Issues
+
+<Accordion title="Create Issue">
+```bash
+gh issue create
+```
+
+With flags:
+```bash
+gh issue create --title "Bug report" --body "Description"
+```
+</Accordion>
+
+<Accordion title="List Issues">
+```bash
+gh issue list
+```
+
+Filter issues:
+```bash
+gh issue list --state open
+gh issue list --label bug
+gh issue list --assignee @me
+```
+</Accordion>
+
+<Accordion title="View Issue">
+```bash
+gh issue view [number]
+```
+</Accordion>
+
+<Accordion title="Close Issue">
+```bash
+gh issue close [number]
+```
+</Accordion>
+
+### Workflows & Actions
+
+<CodeGroup>
+```bash List workflows
+gh workflow list
+```
+
+```bash View workflow runs
+gh run list
+```
+
+```bash View specific run
+gh run view [run-id]
+```
+
+```bash Watch a run
+gh run watch [run-id]
+```
+</CodeGroup>
+
+<Warning>
+Make sure you have the necessary permissions to view and manage workflows.
+</Warning>
+
+### Gists
+
+<Accordion title="Create Gist">
+```bash From file
+gh gist create [file]
+```
+
+```bash From stdin
+echo "code" | gh gist create
+```
+</Accordion>
+
+<Accordion title="List Gists">
+```bash
+gh gist list
+```
+</Accordion>
+
+<Accordion title="View Gist">
+```bash
+gh gist view [gist-id]
+```
+</Accordion>
+
+### Releases
+
+<CodeGroup>
+```bash List releases
+gh release list
+```
+
+```bash Create release
+gh release create v1.0.0
+```
+
+```bash View release
+gh release view v1.0.0
+```
+
+```bash Download release assets
+gh release download v1.0.0
+```
+</CodeGroup>
+
+## Tips & Tricks
+
+<Tip>
+**Use aliases**: Create shortcuts for frequently used commands.
+```bash
+gh alias set prc 'pr create'
+gh alias set prv 'pr view'
+```
+</Tip>
+
+<Tip>
+**JSON output**: Many commands support `--json` flag for programmatic use.
+```bash
+gh pr list --json number,title,author
+```
+</Tip>
+
+<Tip>
+**Interactive mode**: Most commands work interactively if you omit required arguments.
+```bash
+gh pr create  # Opens interactive prompts
+```
+</Tip>
+
+<Note>
+For the complete list of commands and options, visit the [official GitHub CLI documentation](https://cli.github.com/manual/).
+</Note>
